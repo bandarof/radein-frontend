@@ -4,31 +4,32 @@ type Logo = {
   name: string;
   src?: string; // local public path
   slug?: string; // simpleicons slug
+  color?: string; // brand hex without '#'
   bg?: string;
   fg?: string;
   label?: string; // fallback label
 };
 
-// Map of logos; TradingView removed as requested. If slug exists we fetch from Simple Icons CDN.
+// Map of logos; TradingView removed as requested. If slug exists we fetch from Simple Icons CDN and use brand color.
 const logos: Logo[] = [
-  { name: "Next.js", slug: "nextdotjs" },
-  { name: "Vercel", slug: "vercel" },
-  { name: "JavaScript", slug: "javascript" },
-  { name: "TypeScript", slug: "typescript" },
-  { name: "React", slug: "react" },
-  { name: "Node.js", slug: "nodedotjs" },
-  { name: "Tailwind", slug: "tailwindcss" },
-  { name: "Python", slug: "python" },
-  { name: "Solidity", slug: "solidity" },
-  { name: "PostgreSQL", slug: "postgresql" },
-  { name: "Docker", slug: "docker" },
-  { name: "Git", slug: "git" },
-  { name: "GitHub", slug: "github" },
-  { name: "AWS", slug: "amazonaws" },
-  { name: "Supabase", slug: "supabase" },
+  { name: "Next.js", slug: "nextdotjs", color: "000000" },
+  { name: "Vercel", slug: "vercel", color: "000000" },
+  { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
+  { name: "TypeScript", slug: "typescript", color: "3178C6" },
+  { name: "React", slug: "react", color: "61DAFB" },
+  { name: "Node.js", slug: "nodedotjs", color: "339933" },
+  { name: "Tailwind", slug: "tailwindcss", color: "06B6D4" },
+  { name: "Python", slug: "python", color: "3776AB" },
+  { name: "Solidity", slug: "solidity", color: "363636" },
+  { name: "PostgreSQL", slug: "postgresql", color: "336791" },
+  { name: "Docker", slug: "docker", color: "2496ED" },
+  { name: "Git", slug: "git", color: "F05032" },
+  { name: "GitHub", slug: "github", color: "181717" },
+  { name: "AWS", slug: "amazonaws", color: "FF9900" },
+  { name: "Supabase", slug: "supabase", color: "3ECF8E" },
 
   // Additional from CV — use slugs where available, otherwise fall back to badges
-  { name: "Avaya", slug: "avaya" },
+  { name: "Avaya", slug: "avaya", color: "EE1C23" },
   { name: "Pine Script", label: "Pine", bg: "#0ea5e9", fg: "#001018" },
   { name: "CRM", label: "CRM", bg: "#7c3aed", fg: "#ffffff" },
   { name: "KYC", label: "KYC", bg: "#f97316", fg: "#111827" },
@@ -53,8 +54,8 @@ export default function TechLogos() {
             title={l.name}
           >
             {l.slug ? (
-              // fetch monochrome white SVG from Simple Icons CDN
-              <img src={SIMPLE_ICONS(l.slug)} alt={l.name} width={18} height={18} className="opacity-95" />
+              // fetch colored SVG from Simple Icons CDN using brand color when available
+              <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={18} height={18} className="opacity-100" />
             ) : l.src ? (
               <img src={l.src} alt={l.name} width={18} height={18} className="opacity-95" />
             ) : (
