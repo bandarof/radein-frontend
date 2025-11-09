@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import SocialLinks from './SocialLinks';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -30,13 +31,18 @@ export default function Navbar() {
       </div>
 
       {/* Desktop nav */}
-      <nav className="hidden md:flex space-x-6">
+      <nav className="hidden md:flex space-x-6 items-center">
         <Link className="nav-link" href="/">Home</Link>
         <Link className="nav-link" href="/about">About</Link>
         <Link className="nav-link" href="/portfolio">Portfolio</Link>
         <Link className="nav-link" href="/blog">Blog</Link>
         <Link className="nav-link" href="/contact">Contact</Link>
       </nav>
+
+      {/* Social links (desktop) */}
+      <div className="hidden md:flex items-center ml-4">
+        <SocialLinks />
+      </div>
 
       {/* Mobile menu button */}
       <div className="md:hidden relative" ref={menuRef}>
@@ -59,6 +65,9 @@ export default function Navbar() {
             <Link href="/portfolio" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Portfolio</Link>
             <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Blog</Link>
             <Link href="/contact" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Contact</Link>
+            <div className="border-t border-gray-800 mt-2 pt-2 px-2">
+              <SocialLinks />
+            </div>
           </div>
         )}
       </div>

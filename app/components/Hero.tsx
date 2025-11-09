@@ -9,6 +9,7 @@ const EMBED_URL = 'https://cloud.radein.com/index.php/apps/appointments/embed/EG
 export default function Hero() {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+  const startRef = useRef<number>(Date.now());
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -17,6 +18,10 @@ export default function Hero() {
     if (open) document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
+
+  useEffect(() => {
+    startRef.current = Date.now();
+  }, []);
 
   // close when clicking outside
   function handleBackdropClick(e: React.MouseEvent) {
@@ -70,33 +75,62 @@ export default function Hero() {
               href={EMBED_URL}
               onClick={async (e) => {
                 e.preventDefault();
+
+                // Basic client-side anti-bot: require a short dwell time before allowing the request
+                const minDelay = 3000; // ms
+                const now = Date.now();
+                if (now - startRef.current < minDelay) {
+                  alert('Please stay on the page for a moment before booking to prevent spam.');
+                  return;
+                }
+
                 try {
-                  const res = await fetch(`/api/embed/check?url=${encodeURIComponent(EMBED_URL)}`);
+                  // Call protected server endpoint which applies rate-limiting and optional CAPTCHA verification
+                  const res = await fetch('/api/hire', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embedUrl: EMBED_URL, startedAt: startRef.current, honeypot: '' }),
+                  });
+
                   const json = await res.json();
-                  const xfo = (json.headers && json.headers['x-frame-options']) || '';
-                  const csp = (json.headers && json.headers['content-security-policy']) || '';
-
-                  const blockedByXFO = xfo && (xfo.toLowerCase().includes('deny') || xfo.toLowerCase().includes('sameorigin'));
-
-                  let blockedByCSP = false;
-                  const m = csp ? csp.match(/frame-ancestors\s+([^;]+)/i) : null;
-                  if (m && m[1]) {
-                    const fa = m[1];
-                    if (!fa.includes('*') && !/self|'self'/.test(fa) && !fa.includes(window.location.origin)) blockedByCSP = true;
-                  }
-
-                  if (blockedByXFO || blockedByCSP) {
-                    // fallback to opening a centered popup when embedding is blocked
-                    openPopup(EMBED_URL);
+                  if (!res.ok) {
+                    alert(json?.error || 'Could not open booking form. Please try again later.');
                     return;
                   }
 
-                  setOpen(true);
+                  // If server allowed, proceed to check whether the embed can be iframed
+                  try {
+                    const check = await fetch(`/api/embed/check?url=${encodeURIComponent(EMBED_URL)}`);
+                    const checkJson = await check.json();
+                    const xfo = (checkJson.headers && checkJson.headers['x-frame-options']) || '';
+                    const csp = (checkJson.headers && checkJson.headers['content-security-policy']) || '';
+
+                    const blockedByXFO = xfo && (xfo.toLowerCase().includes('deny') || xfo.toLowerCase().includes('sameorigin'));
+
+                    let blockedByCSP = false;
+                    const m = csp ? csp.match(/frame-ancestors\s+([^;]+)/i) : null;
+                    if (m && m[1]) {
+                      const fa = m[1];
+                      if (!fa.includes('*') && !/self|'self'/.test(fa) && !fa.includes(window.location.origin)) blockedByCSP = true;
+                    }
+
+                    if (blockedByXFO || blockedByCSP) {
+                      // fallback to opening a centered popup when embedding is blocked
+                      openPopup(EMBED_URL);
+                      return;
+                    }
+
+                    setOpen(true);
+                  } catch (err) {
+                    openPopup(EMBED_URL);
+                  }
                 } catch (err) {
-                  openPopup(EMBED_URL);
+                  // network or unexpected error
+                  alert('An error occurred while contacting the booking service. Please try again.');
                 }
               }}
               className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-cyan-400 text-gray-900 font-semibold transition hero-cta neon-border"
+              rel="noopener noreferrer nofollow"
             >
               Hire me!
             </a>
