@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Background elements */}
         <div
           className="fixed inset-0 -z-10 bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: 'url("https://25bcdd03f32a4e2a8d98c81f6ad235f0-d829844a97b7411f96185a08a.fly.dev/bg.png")' }}
+          style={{ backgroundImage: 'url("https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbdd633678bab4619a59587e2a6bf411a?format=webp&width=800")' }}
           aria-hidden="true"
         />
 
