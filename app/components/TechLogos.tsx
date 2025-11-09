@@ -10,7 +10,7 @@ type Logo = {
   label?: string; // fallback label
 };
 
-// Map of logos; TradingView removed as requested. If slug exists we fetch from Simple Icons CDN and use brand color.
+// Map of logos; TradingView and other CV-specific badges removed per request. If slug exists we fetch from Simple Icons CDN and use brand color.
 const logos: Logo[] = [
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
   { name: "Vercel", slug: "vercel", color: "000000" },
@@ -27,17 +27,6 @@ const logos: Logo[] = [
   { name: "GitHub", slug: "github", color: "181717" },
   { name: "AWS", slug: "amazonaws", color: "FF9900" },
   { name: "Supabase", slug: "supabase", color: "3ECF8E" },
-
-  // Additional from CV — use slugs where available, otherwise fall back to badges
-  { name: "Avaya", slug: "avaya", color: "EE1C23" },
-  { name: "Pine Script", label: "Pine", bg: "#0ea5e9", fg: "#001018" },
-  { name: "CRM", label: "CRM", bg: "#7c3aed", fg: "#ffffff" },
-  { name: "KYC", label: "KYC", bg: "#f97316", fg: "#111827" },
-  { name: "SEO", label: "SEO", bg: "#10b981", fg: "#052e1a" },
-  { name: "PPC", label: "PPC", bg: "#06b6d4", fg: "#012" },
-  { name: "Blockchain", label: "Blockchain", bg: "#111827", fg: "#60a5fa" },
-  { name: "Fintech", label: "Fintech", bg: "#0f172a", fg: "#fbbf24" },
-  { name: "Machine Learning", label: "ML", bg: "#0ea5a4", fg: "#042" },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
