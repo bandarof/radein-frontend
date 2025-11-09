@@ -15,10 +15,8 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  experimental: {
-    // allow cross-origin dev origins for RSC in dev
-    allowedDevOrigins,
-  },
+  // allow cross-origin dev origins for RSC in dev
+  allowedDevOrigins,
 };
 
 export default nextConfig;
