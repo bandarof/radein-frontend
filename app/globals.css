@@ -32,7 +32,7 @@ body {
 :root { /* optional theme variables */ }
 
 .site-bg {
-  background-image: url('https://radein.com/bg.png');
+  background-image: url('https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbdd633678bab4619a59587e2a6bf411a?format=webp&width=800');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
