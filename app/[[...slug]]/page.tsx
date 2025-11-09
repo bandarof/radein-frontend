@@ -54,9 +54,11 @@ export default function Page() {
 
   return (
     <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
+      key={pageJson?.id || 'builder-page'}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }}
+      onAnimationStart={() => console.log('motion: animation started')}
+      onAnimationComplete={() => console.log('motion: animation complete')}
       className="motion-wrapper"
     >
       <BuilderComponent model="page" content={pageJson} />
