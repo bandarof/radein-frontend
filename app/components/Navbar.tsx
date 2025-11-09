@@ -65,6 +65,9 @@ export default function Navbar() {
             <Link href="/portfolio" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Portfolio</Link>
             <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Blog</Link>
             <Link href="/contact" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Contact</Link>
+            <div className="border-t border-gray-800 mt-2 pt-2 px-2">
+              <SocialLinks />
+            </div>
           </div>
         )}
       </div>
