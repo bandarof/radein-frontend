@@ -10,31 +10,27 @@ type Logo = {
   label?: string; // fallback label
 };
 
-// Map of logos; removed AWS and added server-side tech per request. If slug exists we fetch from Simple Icons CDN and use brand color.
+// Map of logos ordered by importance. If slug exists we fetch from Simple Icons CDN and use brand color.
 const logos: Logo[] = [
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
-  { name: "Vercel", slug: "vercel", color: "000000" },
+  { name: "React", slug: "react", color: "61DAFB" },
+  { name: "TypeScript", slug: "typescript", color: "3178C6" },
   { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
   { name: "HTML", slug: "html5", color: "E34F26" },
-  { name: "TypeScript", slug: "typescript", color: "3178C6" },
-  { name: "React", slug: "react", color: "61DAFB" },
   { name: "Node.js", slug: "nodedotjs", color: "339933" },
   { name: "Tailwind", slug: "tailwindcss", color: "06B6D4" },
-  { name: "Python", slug: "python", color: "3776AB" },
-  { name: "Solidity", slug: "solidity", color: "363636" },
-  { name: "PostgreSQL", slug: "postgresql", color: "336791" },
-  { name: "Docker", slug: "docker", color: "2496ED" },
-  { name: "Git", slug: "git", color: "F05032" },
-  { name: "GitHub", slug: "github", color: "181717" },
-  { name: "Supabase", slug: "supabase", color: "3ECF8E" },
-
-  // Added server-side/webserver technologies
   { name: "PHP", slug: "php", color: "777BB4" },
   { name: "Nginx", slug: "nginx", color: "009639" },
-
-  // Web3 dev tooling
-  { name: "Remix", slug: "remix", color: "B4282E" },
+  { name: "Docker", slug: "docker", color: "2496ED" },
+  { name: "PostgreSQL", slug: "postgresql", color: "336791" },
+  { name: "Supabase", slug: "supabase", color: "3ECF8E" },
   { name: "web3.js", slug: "web3dotjs", color: "143CFB" },
+  { name: "Remix", slug: "remix", color: "B4282E" },
+  { name: "Solidity", slug: "solidity", color: "363636" },
+  { name: "Python", slug: "python", color: "3776AB" },
+  { name: "GitHub", slug: "github", color: "181717" },
+  { name: "Git", slug: "git", color: "F05032" },
+  { name: "Vercel", slug: "vercel", color: "000000" },
   // UNIX (no canonical Simple Icons entry) - styled badge
   { name: "UNIX", label: "UNIX", bg: "#0f172a", fg: "#34D399" },
 ];
