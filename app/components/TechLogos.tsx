@@ -28,6 +28,18 @@ const logos: Logo[] = [
   { name: "GitHub", label: "GH", bg: "#24292e", fg: "#ffffff" },
   { name: "AWS", label: "AWS", bg: "#232f3e", fg: "#ff9900" },
   { name: "Supabase", label: "SB", bg: "#3ecf8e", fg: "#052e1a" },
+
+  // Additional skills from CV
+  { name: "TradingView", label: "TradingView", bg: "#1f2937", fg: "#9ae6b4" },
+  { name: "Pine Script", label: "Pine", bg: "#0ea5e9", fg: "#001018" },
+  { name: "Avaya", label: "Avaya", bg: "#ef4444", fg: "#ffffff" },
+  { name: "CRM", label: "CRM", bg: "#7c3aed", fg: "#ffffff" },
+  { name: "KYC", label: "KYC", bg: "#f97316", fg: "#111827" },
+  { name: "SEO", label: "SEO", bg: "#10b981", fg: "#052e1a" },
+  { name: "PPC", label: "PPC", bg: "#06b6d4", fg: "#012" },
+  { name: "Blockchain", label: "Blockchain", bg: "#111827", fg: "#60a5fa" },
+  { name: "Fintech", label: "Fintech", bg: "#0f172a", fg: "#fbbf24" },
+  { name: "Machine Learning", label: "ML", bg: "#0ea5a4", fg: "#042" },
 ];
 
 export default function TechLogos() {
