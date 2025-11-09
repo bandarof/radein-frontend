@@ -56,7 +56,7 @@ export default function Page() {
     <motion.div
       key={pageJson?.id || 'builder-page'}
       initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 1.4, ease: 'easeOut' } }}
       onAnimationStart={() => console.log('motion: animation started')}
       onAnimationComplete={() => console.log('motion: animation complete')}
       className="motion-wrapper"
