@@ -3,8 +3,14 @@
 import { BuilderComponent, builder } from '@builder.io/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 builder.init('5a0f3ce2c5134179a3d3a7972a6778ef');
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
 export default function Page() {
   const params = useParams();
@@ -15,8 +21,8 @@ export default function Page() {
 
   useEffect(() => {
     console.log('🔄 Fetching Builder.io content for:', slug);
-    
-    builder.get('page', { 
+
+    builder.get('page', {
       url: slug
     }).then(content => {
       console.log('✅ Builder.io response:', content ? 'CONTENT FOUND' : 'NO CONTENT');
@@ -46,5 +52,15 @@ export default function Page() {
     );
   }
 
-  return <BuilderComponent model="page" content={pageJson} />;
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+      className="motion-wrapper"
+    >
+      <BuilderComponent model="page" content={pageJson} />
+    </motion.div>
+  );
 }
