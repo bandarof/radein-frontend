@@ -52,7 +52,34 @@ export default function Hero() {
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
             <a
               href={EMBED_URL}
-              onClick={(e) => { e.preventDefault(); setOpen(true); }}
+              onClick={async (e) => {
+                e.preventDefault();
+                try {
+                  const res = await fetch(`/api/embed/check?url=${encodeURIComponent(EMBED_URL)}`);
+                  const json = await res.json();
+                  const xfo = (json.headers && json.headers['x-frame-options']) || '';
+                  const csp = (json.headers && json.headers['content-security-policy']) || '';
+
+                  const blockedByXFO = xfo && (xfo.toLowerCase().includes('deny') || xfo.toLowerCase().includes('sameorigin'));
+
+                  let blockedByCSP = false;
+                  const m = csp ? csp.match(/frame-ancestors\s+([^;]+)/i) : null;
+                  if (m && m[1]) {
+                    const fa = m[1];
+                    if (!fa.includes('*') && !/self|'self'/.test(fa) && !fa.includes(window.location.origin)) blockedByCSP = true;
+                  }
+
+                  if (blockedByXFO || blockedByCSP) {
+                    // fallback to opening in new tab when embedding is blocked
+                    window.open(EMBED_URL, '_blank');
+                    return;
+                  }
+
+                  setOpen(true);
+                } catch (err) {
+                  window.open(EMBED_URL, '_blank');
+                }
+              }}
               className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-cyan-400 text-gray-900 font-semibold transition hero-cta neon-border"
             >
               Hire me!
