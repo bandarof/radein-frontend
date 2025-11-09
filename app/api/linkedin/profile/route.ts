@@ -1,58 +1,65 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
 
-async function readToken() {
-  if (process.env.LINKEDIN_ACCESS_TOKEN) return process.env.LINKEDIN_ACCESS_TOKEN;
+function pickProfilePicture(data: any) {
   try {
-    const raw = await fs.readFile('.data/linkedin-token.json', 'utf-8');
-    const parsed = JSON.parse(raw);
-    return parsed?.token?.access_token || null;
-  } catch (err) {
-    return null;
-  }
-}
-
-export async function GET() {
-  const token = await readToken();
-  if (!token) return NextResponse.json({ error: 'No access token available. Please authorize the app via /api/linkedin/auth' }, { status: 401 });
-
-  try {
-    // Basic member data
-    const meRes = await fetch('https://api.linkedin.com/v2/me', { headers: { Authorization: `Bearer ${token}` } });
-    if (!meRes.ok) {
-      const txt = await meRes.text();
-      return NextResponse.json({ error: 'Failed to fetch /me', status: meRes.status, detail: txt }, { status: 502 });
-    }
-    const me = await meRes.json();
-
-    // Attempt to fetch profile fields including positions via projection
-    // Note: this may require additional LinkedIn API permissions and may fail with 403.
-    let profile: any = null;
-    try {
-      // Use projection to request positions and summary if available
-      // This endpoint may not be available for all apps; handle errors gracefully
-      const projection = encodeURIComponent('(id,localizedFirstName,localizedLastName,headline,summary,positions*(title,company,description,location,startDate,endDate))');
-      const profileUrl = `https://api.linkedin.com/v2/people/(id:${me.id})?projection=${projection}`;
-      const profileRes = await fetch(profileUrl, { headers: { Authorization: `Bearer ${token}` } });
-      if (profileRes.ok) {
-        profile = await profileRes.json();
-      } else {
-        // Try alternate projection that some accounts support
-        const altUrl = `https://api.linkedin.com/v2/people/(id:${me.id})`;
-        const altRes = await fetch(altUrl, { headers: { Authorization: `Bearer ${token}` } });
-        if (altRes.ok) profile = await altRes.json();
-        else {
-          const txt = await profileRes.text();
-          profile = { error: 'Profile projection failed', status: profileRes.status, detail: txt };
+    const display = data['profilePicture']?.['displayImage~'];
+    const elements = display?.elements;
+    if (Array.isArray(elements)) {
+      // choose the largest by width in identifiers
+      let best = null;
+      let bestWidth = 0;
+      for (const el of elements) {
+        const ids = el?.identifiers;
+        if (!Array.isArray(ids)) continue;
+        for (const id of ids) {
+          const w = id?.data?.com.linkedin.digitalmedia.mediaartifact.StillImage?.attributes?.width || id?.width || 0;
+          const url = id?.identifier || id?.file || id?.uri;
+          if (!url) continue;
+          if (w > bestWidth) {
+            bestWidth = w;
+            best = url;
+          } else if (!best) {
+            best = url;
+          }
         }
       }
-    } catch (err: any) {
-      profile = { error: 'Profile fetch error', detail: String(err) };
+      return best;
     }
+  } catch (e) {}
+  return null;
+}
 
-    return NextResponse.json({ me, profile });
-  } catch (err: any) {
-    console.error('Error fetching LinkedIn profile:', err);
-    return NextResponse.json({ error: 'Internal server error', detail: String(err) }, { status: 500 });
+export async function GET(req: Request) {
+  const cookieHeader = req.headers.get('cookie') || '';
+  const tokenMatch = cookieHeader.match(/linkedin_access_token=([^;]+)/);
+  const token = tokenMatch ? tokenMatch[1] : null;
+  if (!token) return NextResponse.json({ error: 'no_token' }, { status: 401 });
+
+  // Fetch profile with picture projection
+  const profileRes = await fetch(
+    'https://api.linkedin.com/v2/me?projection=(id,localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))',
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  if (!profileRes.ok) {
+    const t = await profileRes.text();
+    return NextResponse.json({ error: 'profile_fetch_failed', detail: t }, { status: 500 });
   }
+
+  const profileJson = await profileRes.json();
+  const picture = pickProfilePicture(profileJson) || null;
+
+  // Optionally fetch email
+  let email = null;
+  try {
+    const eRes = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (eRes.ok) {
+      const eJson = await eRes.json();
+      email = eJson?.elements?.[0]?.['handle~']?.emailAddress || null;
+    }
+  } catch (e) {}
+
+  return NextResponse.json({ profile: profileJson, picture, email });
 }

@@ -13,13 +13,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-gray-900 text-gray-100`}>
-        {/* Background elements */}
-        <div
-          className="fixed inset-0 -z-10 bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: 'url("https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbdd633678bab4619a59587e2a6bf411a?format=webp&width=800")' }}
-          aria-hidden="true"
-        />
+      <body className={`${inter.className} min-h-screen bg-gray-900 text-gray-100 bg-grid bg-radial-glow aurora`}>
+        {/* Background elements (grid + aurora + radial glows via CSS) */}
 
         {/* Navbar component (handles mobile menu) */}
         <Navbar />
@@ -27,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Main content area */}
         <main className="pt-24">{children}</main>
 
-        {/* ADD THE FOOTER BACK - I removed this earlier */}
         <footer className="p-6 text-center text-gray-500 border-t border-gray-700">
           © {new Date().getFullYear()} Bander Radein
         </footer>
