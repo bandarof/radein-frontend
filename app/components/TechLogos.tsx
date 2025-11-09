@@ -39,7 +39,7 @@ const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicon
 
 export default function TechLogos() {
   return (
-    <div className="w-full">
+    <div className="w-full mb-6">
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
       <div className="flex flex-wrap items-center gap-3 opacity-95">
         {logos.map((l) => (
