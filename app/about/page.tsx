@@ -1,4 +1,5 @@
 import LinkedInEmbed from '../components/LinkedInEmbed';
+import LinkedInProfile from '../components/LinkedInProfile';
 import Hero from '../components/Hero';
 
 export const metadata = {
@@ -20,8 +21,13 @@ export default function AboutPage() {
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="md:col-span-2">
-            <h3 className="text-xl font-semibold mb-4">LinkedIn Feed</h3>
-            <LinkedInEmbed profileUrl="https://www.linkedin.com/in/bandarof/" />
+            <h3 className="text-xl font-semibold mb-4">LinkedIn Profile</h3>
+            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" />
+
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold mb-4">LinkedIn Feed</h3>
+              <LinkedInEmbed profileUrl="https://www.linkedin.com/in/bandarof/" />
+            </div>
           </div>
 
           <aside className="md:col-span-1">
