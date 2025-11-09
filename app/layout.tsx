@@ -21,25 +21,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           aria-hidden="true"
         />
 
-        {/* Your existing header/navigation - this stays fixed */}
-        <header className="p-6 flex justify-between items-center bg-gray-900/90 backdrop-blur-md fixed w-full z-50 shadow-md">
-          <div className="flex items-center space-x-3">
-            <img
-              src="/profile.png"
-              alt="Bander Radein"
-              className="w-10 h-10 rounded-full border-2 border-cyan-400 shadow-md"
-            />
-            <h1 className="text-2xl font-bold tracking-wide text-cyan-400">Bander Radein</h1>
-          </div>
-
-          <nav className="space-x-6">
-            <Link className="hover:text-cyan-300" href="/">Home</Link>
-            <Link className="hover:text-cyan-300" href="/about">About</Link>
-            <Link className="hover:text-cyan-300" href="/portfolio">Portfolio</Link>
-            <Link className="hover:text-cyan-300" href="/blog">Blog</Link>
-            <Link className="hover:text-cyan-300" href="/contact">Contact</Link>
-          </nav>
-        </header>
+        {/* Navbar component (handles mobile menu) */}
+        <Navbar />
 
         {/* Main content area where Builder.io pages will render */}
         <main className="pt-24">{children}</main>
