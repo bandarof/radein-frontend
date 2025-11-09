@@ -24,6 +24,22 @@ export default function Hero() {
     if (e.target === dialogRef.current) setOpen(false);
   }
 
+  // open a centered popup window (used as a fallback when embedding is blocked)
+  function openPopup(url: string) {
+    try {
+      const w = 900;
+      const h = 720;
+      const left = typeof window.screenX === 'number' ? window.screenX + Math.max(0, (window.innerWidth - w) / 2) : Math.max(0, (window.innerWidth - w) / 2);
+      const top = typeof window.screenY === 'number' ? window.screenY + Math.max(0, (window.innerHeight - h) / 2) : Math.max(0, (window.innerHeight - h) / 2);
+      const features = `toolbar=0,location=0,status=0,menubar=0,resizable=1,scrollbars=1,width=${w},height=${h},left=${Math.round(left)},top=${Math.round(top)}`;
+      const popup = window.open(url, '_blank', features);
+      if (popup) popup.focus();
+    } catch (e) {
+      // fallback to default behavior
+      window.open(url, '_blank');
+    }
+  }
+
   return (
     <section className="relative min-h-[calc(100vh-96px)] flex items-center overflow-hidden">
       {/* decorative orbs */}
