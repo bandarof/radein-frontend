@@ -17,11 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Background elements */}
         <div
           className="fixed inset-0 -z-0 bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: "url('/bg.png')" }}
+          style={{ backgroundImage: 'url("https://25bcdd03f32a4e2a8d98c81f6ad235f0-d829844a97b7411f96185a08a.fly.dev/bg.png")' }}
           aria-hidden="true"
         />
-        {/* Lighter overlay */}
-        <div className="fixed inset-0 z-10 bg-black/30 pointer-events-none" aria-hidden="true" />
 
         {/* Your existing header/navigation - this stays fixed */}
         <header className="p-6 flex justify-between items-center bg-gray-900/90 backdrop-blur-md fixed w-full z-50 shadow-md">

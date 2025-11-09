@@ -20,11 +20,6 @@
 }
 
 body {
-  background-image: url('https://radein.com/bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
   background-color: #0a0a0a; /* fallback color */
   color: #fff;
   min-height: 100vh;
@@ -33,13 +28,6 @@ body {
   z-index: 0;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6); /* dark overlay */
-  z-index: -1;
-}
 
 :root { /* optional theme variables */ }
 
