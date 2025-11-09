@@ -30,6 +30,12 @@ const logos: Logo[] = [
   // Added server-side/webserver technologies
   { name: "PHP", slug: "php", color: "777BB4" },
   { name: "Nginx", slug: "nginx", color: "009639" },
+
+  // Web3 dev tooling
+  { name: "Remix", slug: "remix", color: "B4282E" },
+  { name: "Hardhat", slug: "hardhat", color: "F0D50C" },
+  // Foundry isn't available in Simple Icons; show a styled badge instead
+  { name: "Foundry", label: "Foundry", bg: "#6D28D9", fg: "#FFFFFF" },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
