@@ -15,6 +15,7 @@ const logos: Logo[] = [
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
   { name: "Vercel", slug: "vercel", color: "000000" },
   { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
+  { name: "HTML", slug: "html5", color: "E34F26" },
   { name: "TypeScript", slug: "typescript", color: "3178C6" },
   { name: "React", slug: "react", color: "61DAFB" },
   { name: "Node.js", slug: "nodedotjs", color: "339933" },
