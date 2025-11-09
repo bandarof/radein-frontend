@@ -2,7 +2,7 @@ export default function SocialLinks({ className = '' }: { className?: string }) 
   const SIMPLE = (slug: string, color = 'ffffff') => `https://cdn.simpleicons.org/${slug}/${color}`;
 
   const links = [
-    { name: 'Twitter', href: 'https://twitter.com/banderradein', slug: 'twitter', color: '1DA1F2' },
+    { name: 'X', href: 'https://x.com/banderradein', slug: 'x', color: '000000' },
     { name: 'Instagram', href: 'https://instagram.com/bandarof', slug: 'instagram', color: 'E4405F' },
     { name: 'GitHub', href: 'https://github.com/bandarof', slug: 'github', color: '181717' },
   ];
