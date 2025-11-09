@@ -119,3 +119,12 @@ p { color: rgba(230,238,246,0.85); }
   .bg-grid { background-size: 36px 36px; }
   .logo-tile { min-width: 32px; height: 32px; }
 }
+
+/* Navbar link style */
+.nav-link {
+  color: rgba(230,238,246,0.8);
+  transition: color 160ms ease, transform 160ms ease;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.nav-link:hover { color: #D1FAFF; transform: translateY(-2px); background: rgba(255,255,255,0.02); }
