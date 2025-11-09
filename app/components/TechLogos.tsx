@@ -45,23 +45,22 @@ export default function TechLogos() {
         {logos.map((l) => (
           <div
             key={l.name}
-            className="h-8 flex items-center gap-2 px-3 rounded-md border border-gray-700/60 bg-gray-900/30 backdrop-blur-sm hover:border-cyan-400/50 transition"
+            className="flex items-center gap-3 rounded-lg transition"
             title={l.name}
           >
-            {l.src ? (
-              <img src={l.src} alt={l.name} width={18} height={18} className="opacity-100" />
-            ) : l.slug ? (
-              // fetch colored SVG from Simple Icons CDN using brand color when available
-              <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={18} height={18} className="opacity-100" />
-            ) : (
-              <span
-                className="text-[10px] font-bold leading-none px-1.5 py-1 rounded-sm"
-                style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}
-              >
-                {l.label || l.name}
-              </span>
-            )}
-            <span className="text-xs text-gray-300 hidden sm:inline">{l.name}</span>
+            <div className="logo-tile">
+              {l.src ? (
+                <img src={l.src} alt={l.name} width={20} height={20} />
+              ) : l.slug ? (
+                // fetch colored SVG from Simple Icons CDN using brand color when available
+                <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
+              ) : (
+                <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
+                  {l.label || l.name}
+                </span>
+              )}
+            </div>
+            <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
           </div>
         ))}
       </div>
