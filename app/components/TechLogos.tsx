@@ -33,9 +33,9 @@ const logos: Logo[] = [
 
   // Web3 dev tooling
   { name: "Remix", slug: "remix", color: "B4282E" },
-  { name: "Hardhat", slug: "hardhat", color: "F0D50C" },
-  // Foundry isn't available in Simple Icons; show a styled badge instead
-  { name: "Foundry", label: "Foundry", bg: "#6D28D9", fg: "#FFFFFF" },
+  { name: "web3.js", slug: "web3dotjs", color: "143CFB" },
+  // UNIX (no canonical Simple Icons entry) - styled badge
+  { name: "UNIX", label: "UNIX", bg: "#0f172a", fg: "#34D399" },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
