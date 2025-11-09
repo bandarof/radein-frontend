@@ -63,7 +63,7 @@ export default function Page() {
     >
       {slug === '/' ? (
         <div className="w-full" style={{ minHeight: 'calc(100vh - 96px)' }}>
-          <div className="container mx-auto px-6 flex items-center justify-center h-full">
+          <div className="container mx-auto px-6 flex items-center justify-center h-full" style={{ transform: 'translateY(8vh)' }}>
             <BuilderComponent model="page" content={pageJson} />
           </div>
         </div>
