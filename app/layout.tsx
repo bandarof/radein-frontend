@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Navbar component (handles mobile menu) */}
         <Navbar />
 
-        {/* Main content area where Builder.io pages will render */}
+        {/* Main content area */}
         <main className="pt-24">{children}</main>
 
         {/* ADD THE FOOTER BACK - I removed this earlier */}
