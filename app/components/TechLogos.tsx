@@ -25,7 +25,8 @@ const logos: Logo[] = [
   { name: "Docker", slug: "docker", color: "2496ED" },
   { name: "Git", slug: "git", color: "F05032" },
   { name: "GitHub", slug: "github", color: "181717" },
-  { name: "AWS", slug: "amazonaws", color: "FF9900" },
+  // Use explicit CDN src for AWS to ensure consistent rendering
+  { name: "AWS", slug: "amazonaws", color: "FF9900", src: "https://cdn.simpleicons.org/amazonaws/FF9900" },
   { name: "Supabase", slug: "supabase", color: "3ECF8E" },
 ];
 
@@ -42,11 +43,11 @@ export default function TechLogos() {
             className="h-8 flex items-center gap-2 px-3 rounded-md border border-gray-700/60 bg-gray-900/30 backdrop-blur-sm hover:border-cyan-400/50 transition"
             title={l.name}
           >
-            {l.slug ? (
+            {l.src ? (
+              <img src={l.src} alt={l.name} width={18} height={18} className="opacity-100" />
+            ) : l.slug ? (
               // fetch colored SVG from Simple Icons CDN using brand color when available
               <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={18} height={18} className="opacity-100" />
-            ) : l.src ? (
-              <img src={l.src} alt={l.name} width={18} height={18} className="opacity-95" />
             ) : (
               <span
                 className="text-[10px] font-bold leading-none px-1.5 py-1 rounded-sm"
