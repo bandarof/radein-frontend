@@ -10,7 +10,7 @@ type Logo = {
   label?: string; // fallback label
 };
 
-// Map of logos; TradingView and other CV-specific badges removed per request. If slug exists we fetch from Simple Icons CDN and use brand color.
+// Map of logos; removed AWS and added server-side tech per request. If slug exists we fetch from Simple Icons CDN and use brand color.
 const logos: Logo[] = [
   { name: "Next.js", slug: "nextdotjs", color: "000000" },
   { name: "Vercel", slug: "vercel", color: "000000" },
@@ -25,9 +25,12 @@ const logos: Logo[] = [
   { name: "Docker", slug: "docker", color: "2496ED" },
   { name: "Git", slug: "git", color: "F05032" },
   { name: "GitHub", slug: "github", color: "181717" },
-  // Use explicit CDN src for AWS to ensure consistent rendering
-  { name: "AWS", slug: "amazonaws", color: "FF9900", src: "https://cdn.simpleicons.org/amazonaws/FF9900" },
   { name: "Supabase", slug: "supabase", color: "3ECF8E" },
+
+  // Added server-side/webserver technologies
+  { name: "PHP", slug: "php", color: "777BB4" },
+  { name: "LiteSpeed", slug: "litespeed", color: "FF6A00" },
+  { name: "Nginx", slug: "nginx", color: "009639" },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
