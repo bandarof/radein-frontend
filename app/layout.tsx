@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} min-h-screen bg-gray-900 text-gray-100`}>
         {/* Background elements */}
         <div
-          className="fixed inset-0 -z-0 bg-center bg-cover bg-no-repeat"
+          className="fixed inset-0 -z-10 bg-center bg-cover bg-no-repeat"
           style={{ backgroundImage: 'url("https://25bcdd03f32a4e2a8d98c81f6ad235f0-d829844a97b7411f96185a08a.fly.dev/bg.png")' }}
           aria-hidden="true"
         />
