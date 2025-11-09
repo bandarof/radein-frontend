@@ -1,9 +1,29 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import TechLogos from './TechLogos';
 
+const EMBED_URL = 'https://cloud.radein.com/index.php/apps/appointments/embed/EGzq4vzE7lBVQwVy/form';
+
 export default function Hero() {
+  const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    if (open) document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  // close when clicking outside
+  function handleBackdropClick(e: React.MouseEvent) {
+    if (!dialogRef.current) return;
+    if (e.target === dialogRef.current) setOpen(false);
+  }
+
   return (
     <section className="relative min-h-[calc(100vh-96px)] flex items-center overflow-hidden">
       {/* decorative orbs */}
@@ -31,9 +51,8 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
             <a
-              href="https://cloud.radein.com/index.php/apps/appointments/pub/EGzq4vzE7lBVQwVy/form"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={EMBED_URL}
+              onClick={(e) => { e.preventDefault(); setOpen(true); }}
               className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-cyan-400 text-gray-900 font-semibold transition hero-cta neon-border"
             >
               Hire me!
@@ -64,6 +83,38 @@ export default function Hero() {
           </div>
         </div>
       </motion.div>
+
+      {/* Modal dialog for embed */}
+      {open && (
+        <div
+          ref={dialogRef}
+          onClick={handleBackdropClick}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Hire me booking form"
+        >
+          <div className="relative w-full max-w-4xl h-[80vh] rounded-xl bg-gray-900/80 border border-gray-800 shadow-2xl overflow-hidden">
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute right-3 top-3 z-30 inline-flex items-center justify-center w-9 h-9 rounded-md bg-gray-800/60 hover:bg-gray-800/80 text-gray-200"
+              aria-label="Close"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <iframe
+              src={EMBED_URL}
+              title="Booking form"
+              className="w-full h-full bg-white"
+              frameBorder={0}
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
