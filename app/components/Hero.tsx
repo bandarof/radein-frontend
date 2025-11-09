@@ -86,14 +86,14 @@ export default function Hero() {
                   }
 
                   if (blockedByXFO || blockedByCSP) {
-                    // fallback to opening in new tab when embedding is blocked
-                    window.open(EMBED_URL, '_blank');
+                    // fallback to opening a centered popup when embedding is blocked
+                    openPopup(EMBED_URL);
                     return;
                   }
 
                   setOpen(true);
                 } catch (err) {
-                  window.open(EMBED_URL, '_blank');
+                  openPopup(EMBED_URL);
                 }
               }}
               className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-cyan-400 text-gray-900 font-semibold transition hero-cta neon-border"
