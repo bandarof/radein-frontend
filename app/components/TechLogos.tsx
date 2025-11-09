@@ -29,7 +29,6 @@ const logos: Logo[] = [
 
   // Added server-side/webserver technologies
   { name: "PHP", slug: "php", color: "777BB4" },
-  { name: "LiteSpeed", slug: "litespeed", color: "FF6A00" },
   { name: "Nginx", slug: "nginx", color: "009639" },
 ];
 
