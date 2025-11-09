@@ -9,8 +9,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="pt-24">
-      <section className="container mx-auto px-6 py-16">
+    <main className="pt-16">
+      <section className="container mx-auto px-6 py-12 -mt-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold">About</h2>
           <p className="mt-4 text-gray-300 text-lg">
