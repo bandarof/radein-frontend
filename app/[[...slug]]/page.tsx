@@ -3,8 +3,14 @@
 import { BuilderComponent, builder } from '@builder.io/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 builder.init('5a0f3ce2c5134179a3d3a7972a6778ef');
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
 export default function Page() {
   const params = useParams();
@@ -15,8 +21,8 @@ export default function Page() {
 
   useEffect(() => {
     console.log('🔄 Fetching Builder.io content for:', slug);
-    
-    builder.get('page', { 
+
+    builder.get('page', {
       url: slug
     }).then(content => {
       console.log('✅ Builder.io response:', content ? 'CONTENT FOUND' : 'NO CONTENT');
@@ -46,5 +52,24 @@ export default function Page() {
     );
   }
 
-  return <BuilderComponent model="page" content={pageJson} />;
+  return (
+    <motion.div
+      key={pageJson?.id || 'builder-page'}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 1.4, ease: 'easeOut' } }}
+      onAnimationStart={() => console.log('motion: animation started')}
+      onAnimationComplete={() => console.log('motion: animation complete')}
+      className="motion-wrapper"
+    >
+      {slug === '/' ? (
+        <div className="w-full" style={{ minHeight: 'calc(100vh - 96px)' }}>
+          <div className="container mx-auto px-6 flex items-center justify-center h-full" style={{ transform: 'translateY(8vh)' }}>
+            <BuilderComponent model="page" content={pageJson} />
+          </div>
+        </div>
+      ) : (
+        <BuilderComponent model="page" content={pageJson} />
+      )}
+    </motion.div>
+  );
 }
