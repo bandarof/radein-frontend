@@ -54,11 +54,11 @@ export default function Navbar() {
         {/* Mobile dropdown */}
         {open && (
           <div className="absolute right-0 mt-2 w-48 bg-gray-900/95 border border-gray-800 rounded-md shadow-lg py-2 z-50">
-            <Link href="/" className="block px-4 py-2 hover:bg-gray-800">Home</Link>
-            <Link href="/about" className="block px-4 py-2 hover:bg-gray-800">About</Link>
-            <Link href="/portfolio" className="block px-4 py-2 hover:bg-gray-800">Portfolio</Link>
-            <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800">Blog</Link>
-            <Link href="/contact" className="block px-4 py-2 hover:bg-gray-800">Contact</Link>
+            <Link href="/" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Home</Link>
+            <Link href="/about" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>About</Link>
+            <Link href="/portfolio" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Portfolio</Link>
+            <Link href="/blog" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Blog</Link>
+            <Link href="/contact" className="block px-4 py-2 hover:bg-gray-800" onClick={() => setOpen(false)}>Contact</Link>
           </div>
         )}
       </div>
