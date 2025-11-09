@@ -61,7 +61,15 @@ export default function Page() {
       onAnimationComplete={() => console.log('motion: animation complete')}
       className="motion-wrapper"
     >
-      <BuilderComponent model="page" content={pageJson} />
+      {slug === '/' ? (
+        <div className="w-full" style={{ minHeight: 'calc(100vh - 96px)' }}>
+          <div className="container mx-auto px-6 flex items-center justify-center h-full">
+            <BuilderComponent model="page" content={pageJson} />
+          </div>
+        </div>
+      ) : (
+        <BuilderComponent model="page" content={pageJson} />
+      )}
     </motion.div>
   );
 }
