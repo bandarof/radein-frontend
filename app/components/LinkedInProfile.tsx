@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Timeline from './Timeline';
 
-export default function LinkedInProfile({ profileUrl, onSummary }: { profileUrl: string; onSummary?: (s: string) => void; }) {
+export default function LinkedInProfile({ profileUrl, onSummary, initialSummary }: { profileUrl: string; onSummary?: (s: string) => void; initialSummary?: string; }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any | null>(null);
