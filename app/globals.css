@@ -220,14 +220,16 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  /* layered starfields: small dense dots, medium sparse dots, and tiny sparkles */
   background-image:
-    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
-  background-size: 120px 120px, 220px 220px;
-  opacity: 0.6;
+    radial-gradient(rgba(255,255,255,0.10) 0.6px, transparent 0.6px),
+    radial-gradient(rgba(255,255,255,0.06) 1.2px, transparent 1.2px),
+    radial-gradient(rgba(255,255,255,0.04) 0.9px, transparent 0.9px);
+  background-size: 48px 48px, 96px 96px, 220px 220px;
+  opacity: 0.9;
   mix-blend-mode: screen;
-  filter: blur(0px);
-  animation: about-stars-move 80s linear infinite, about-stars-flicker 6s ease-in-out infinite;
+  filter: blur(0.6px) saturate(120%);
+  animation: about-stars-move 40s linear infinite, about-stars-flicker 3.6s ease-in-out infinite;
 }
 
 @keyframes about-blob-drift {
@@ -239,13 +241,15 @@ body {
 }
 
 @keyframes about-stars-move {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: -1600px 0, 1600px 0; }
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: -800px 0, 800px 0, -1600px 0; }
 }
 @keyframes about-stars-flicker {
-  0% { opacity: 0.55; }
-  50% { opacity: 0.7; }
-  100% { opacity: 0.55; }
+  0% { opacity: 0.6; filter: brightness(0.9); }
+  25% { opacity: 0.9; filter: brightness(1.1); }
+  50% { opacity: 0.5; filter: brightness(0.85); }
+  75% { opacity: 0.95; filter: brightness(1.15); }
+  100% { opacity: 0.6; filter: brightness(0.95); }
 }
 
 /* Neon button/glass helpers */
