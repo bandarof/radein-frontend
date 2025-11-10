@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Timeline from './Timeline';
 
 export default function LinkedInProfile({ profileUrl, onSummary, initialSummary }: { profileUrl: string; onSummary?: (s: string) => void; initialSummary?: string; }) {
