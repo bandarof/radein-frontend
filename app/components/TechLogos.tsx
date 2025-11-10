@@ -57,71 +57,78 @@ export default function TechLogos() {
   return (
     <div className="w-full mb-6">
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
-      <div className="flex flex-wrap items-center gap-3 opacity-95">
-        {logos.map((l) => (
-          <div
-            key={l.name}
-            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-            title={l.name}
-            role="button"
-            tabIndex={0}
-            aria-pressed={active?.name === l.name}
-            aria-expanded={active?.name === l.name}
-            aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
-            onClick={() => toggleActive(l)}
-            onKeyDown={(e) => onKey(e, l)}
-          >
-            <div className="logo-tile">
-              {l.src ? (
-                <img src={l.src} alt={l.name} width={20} height={20} />
-              ) : l.slug ? (
-                // fetch colored SVG from Simple Icons CDN using brand color when available
-                <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
-              ) : (
-                <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
-                  {l.label || l.name}
-                </span>
-              )}
-            </div>
-            <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
-          </div>
-        ))}
-      </div>
 
-      {active && (
-        <div
-          id="tech-desc-panel"
-          className="mt-4 rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm"
-          role="region"
-          aria-live="polite"
-        >
-          <div className="flex items-start gap-3">
-            <div className="logo-tile shrink-0 mt-0.5">
-              {active.src ? (
-                <img src={active.src} alt={active.name} width={20} height={20} />
-              ) : active.slug ? (
-                <img src={SIMPLE_ICONS(active.slug, active.color || 'ffffff')} alt={active.name} width={20} height={20} />
-              ) : (
-                <span className="text-[11px] font-semibold" style={{ background: active.bg || "#111827", color: active.fg || "#E5E7EB" }}>
-                  {active.label || active.name}
-                </span>
-              )}
-            </div>
-            <div className="min-w-0">
-              <p className="font-medium text-gray-100">{active.name}</p>
-              <p className="text-sm text-gray-300 mt-1 leading-relaxed">{active.desc}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setActive(null)}
-              className="ml-auto text-gray-400 hover:text-gray-200 transition"
-              aria-label="Close description"
+      {/* Use a relative container so the description panel can be absolutely positioned (no layout shift) */}
+      <div className="relative">
+        <div className="flex flex-wrap items-center gap-3 opacity-95">
+          {logos.map((l) => (
+            <div
+              key={l.name}
+              className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+              title={l.name}
+              role="button"
+              tabIndex={0}
+              aria-pressed={active?.name === l.name}
+              aria-expanded={active?.name === l.name}
+              aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
+              onClick={() => toggleActive(l)}
+              onKeyDown={(e) => onKey(e, l)}
             >
-              ×
-            </button>
-          </div>
+              <div className="logo-tile">
+                {l.src ? (
+                  <img src={l.src} alt={l.name} width={20} height={20} />
+                ) : l.slug ? (
+                  // fetch colored SVG from Simple Icons CDN using brand color when available
+                  <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
+                ) : (
+                  <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
+                    {l.label || l.name}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
+            </div>
+          ))}
         </div>
-      )}
+
+        {/* Absolutely positioned description panel to avoid pushing other content (like the profile picture) */}
+        {active && (
+          <div className="absolute left-0 right-0 mt-2 z-20 flex justify-center pointer-events-auto">
+            <div
+              id="tech-desc-panel"
+              className="w-full sm:w-[min(48rem,calc(100%-1rem))] rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm"
+              role="region"
+              aria-live="polite"
+            >
+              <div className="flex items-start gap-3">
+                <div className="logo-tile shrink-0 mt-0.5">
+                  {active.src ? (
+                    <img src={active.src} alt={active.name} width={20} height={20} />
+                  ) : active.slug ? (
+                    <img src={SIMPLE_ICONS(active.slug, active.color || 'ffffff')} alt={active.name} width={20} height={20} />
+                  ) : (
+                    <span className="text-[11px] font-semibold" style={{ background: active.bg || "#111827", color: active.fg || "#E5E7EB" }}>
+                      {active.label || active.name}
+                    </span>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-medium text-gray-100">{active.name}</p>
+                  <p className="text-sm text-gray-300 mt-1 leading-relaxed">{active.desc}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActive(null)}
+                  className="ml-auto text-gray-400 hover:text-gray-200 transition"
+                  aria-label="Close description"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
