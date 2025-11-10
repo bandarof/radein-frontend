@@ -58,38 +58,36 @@ export default function TechLogos() {
     <div className="w-full mb-6">
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
 
-      {/* Use a relative container so the description panel can be absolutely positioned (no layout shift) */}
-      <div className="relative">
-        <div className="flex flex-wrap items-center gap-3 opacity-95">
-          {logos.map((l) => (
-            <div
-              key={l.name}
-              className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
-              title={l.name}
-              role="button"
-              tabIndex={0}
-              aria-pressed={active?.name === l.name}
-              aria-expanded={active?.name === l.name}
-              aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
-              onClick={() => toggleActive(l)}
-              onKeyDown={(e) => onKey(e, l)}
-            >
-              <div className="logo-tile">
-                {l.src ? (
-                  <img src={l.src} alt={l.name} width={20} height={20} />
-                ) : l.slug ? (
-                  // fetch colored SVG from Simple Icons CDN using brand color when available
-                  <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
-                ) : (
-                  <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
-                    {l.label || l.name}
-                  </span>
-                )}
-              </div>
-              <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
+      {/* Single container (flex) with relative positioning to avoid changing DOM structure between server and client */}
+      <div className="flex flex-wrap items-center gap-3 opacity-95 relative">
+        {logos.map((l) => (
+          <div
+            key={l.name}
+            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            title={l.name}
+            role="button"
+            tabIndex={0}
+            aria-pressed={active?.name === l.name}
+            aria-expanded={active?.name === l.name}
+            aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
+            onClick={() => toggleActive(l)}
+            onKeyDown={(e) => onKey(e, l)}
+          >
+            <div className="logo-tile">
+              {l.src ? (
+                <img src={l.src} alt={l.name} width={20} height={20} />
+              ) : l.slug ? (
+                // fetch colored SVG from Simple Icons CDN using brand color when available
+                <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
+              ) : (
+                <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
+                  {l.label || l.name}
+                </span>
+              )}
             </div>
-          ))}
-        </div>
+            <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
+          </div>
+        ))}
 
         {/* Absolutely positioned description panel to avoid pushing other content (like the profile picture) */}
         {active && (
