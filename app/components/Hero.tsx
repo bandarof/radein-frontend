@@ -51,6 +51,41 @@ export default function Hero() {
       <div className="pointer-events-none absolute -top-12 -right-12 w-56 h-56 rounded-full bg-cyan-400/14 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-6 w-72 h-72 rounded-full bg-indigo-500/12 blur-2xl" />
 
+      {/* tech background animation */}
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+        <svg className="w-full h-full opacity-30" viewBox="0 0 800 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stopColor="#06b6d4" stopOpacity="0.6" />
+              <stop offset="1" stopColor="#6366f1" stopOpacity="0.6" />
+            </linearGradient>
+          </defs>
+
+          {/* animated connecting lines */}
+          <g stroke="url(#g1)" strokeWidth="1.5" fill="none" strokeLinecap="round">
+            <path d="M50 300 L200 220 L360 280 L520 200 L760 260" strokeDasharray="8 8">
+              <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="6s" repeatCount="indefinite" />
+            </path>
+            <path d="M60 80 L220 140 L380 60 L560 120 L740 50" strokeDasharray="8 8" opacity="0.8">
+              <animate attributeName="stroke-dashoffset" from="0" to="64" dur="8s" repeatCount="indefinite" />
+            </path>
+          </g>
+
+          {/* moving nodes */}
+          <g fill="#06b6d4">
+            <circle r="5" cx="50" cy="300">
+              <animateMotion dur="6s" repeatCount="indefinite" path="M0,0 L150,-80 L160,60 L170,-80 L240,40" />
+            </circle>
+            <circle r="4" cx="760" cy="260">
+              <animateMotion dur="7s" repeatCount="indefinite" path="M0,0 -150,-40 -200,20 -300,-60" />
+            </circle>
+            <circle r="4.5" cx="60" cy="80">
+              <animateTransform attributeName="transform" type="scale" values="1;1.6;1" dur="4s" repeatCount="indefinite" />
+            </circle>
+          </g>
+        </svg>
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
