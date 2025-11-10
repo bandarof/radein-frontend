@@ -65,9 +65,17 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary 
     <div className="linkedin-profile">
       <div className="mx-auto max-w-3xl bg-gray-900/60 border border-gray-800 rounded-md p-6">
         {!data && (
-          <div className="text-center py-8">
-            <p className="text-gray-300 mb-4">Load profile summary and experience from LinkedIn for {profileUrl}</p>
-            <div className="flex justify-center gap-3">
+          <div className="py-6">
+            {initialSummary ? (
+              <div className="mb-4">
+                <h3 className="text-lg font-medium">Summary</h3>
+                <p className="mt-2 text-gray-300 text-sm leading-relaxed">{initialSummary}</p>
+              </div>
+            ) : (
+              <p className="text-gray-300 mb-4 text-center">Load profile summary and experience from LinkedIn for {profileUrl}</p>
+            )}
+
+            <div className="flex justify-center gap-3 mt-4">
               <button onClick={loadProfile} disabled={loading} className="px-6 py-3 rounded-md bg-cyan-400 text-gray-900 font-semibold hover:bg-cyan-300 transition">
                 {loading ? 'Loading...' : 'Load LinkedIn profile'}
               </button>
