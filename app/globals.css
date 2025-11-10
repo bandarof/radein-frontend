@@ -196,37 +196,56 @@ body {
   to { background-position: -720px 0, 720px 0; }
 }
 
-/* stronger about background visuals */
+/* About background: animated blobs + stars (distinct from home) */
 .about-bg::before {
   content: '';
   position: absolute;
-  left: -14%;
-  top: 4%;
-  width: 80vw;
-  height: 80vw;
-  background:
-    repeating-linear-gradient(120deg, rgba(255,255,255,0.01) 0 6px, transparent 6px 12px),
-    radial-gradient(circle at 18% 30%, rgba(124,58,237,0.22), transparent 26%),
-    radial-gradient(circle at 82% 68%, rgba(34,211,238,0.14), transparent 28%);
-  filter: blur(120px) saturate(150%);
+  left: -10%;
+  top: -8%;
+  width: 120%;
+  height: 120%;
+  background-image:
+    radial-gradient(40% 40% at 20% 30%, rgba(124,58,237,0.20) 0%, rgba(124,58,237,0.12) 30%, transparent 60%),
+    radial-gradient(30% 30% at 80% 70%, rgba(34,211,238,0.16) 0%, rgba(34,211,238,0.08) 30%, transparent 60%),
+    radial-gradient(20% 20% at 50% 50%, rgba(236,72,153,0.08) 0%, rgba(236,72,153,0.04) 40%, transparent 70%);
+  background-blend-mode: screen, screen, screen;
+  filter: blur(68px) saturate(140%);
   transform: translate3d(0,0,0);
-  animation: about-drift 16s linear infinite alternate;
-  opacity: 0.99;
-  background-size: 1200px 1200px, cover, cover;
-  animation: about-drift 16s linear infinite alternate, stripeMove 20s linear infinite;
+  opacity: 0.95;
+  will-change: transform, opacity, filter;
+  animation: about-blob-drift 18s ease-in-out infinite alternate;
 }
 .about-bg::after {
   content: '';
   position: absolute;
-  right: -4%;
-  bottom: -2%;
-  width: 48vw;
-  height: 48vw;
-  background: conic-gradient(from 120deg at 50% 50%, rgba(99,102,241,0.16), rgba(236,72,153,0.10));
-  filter: blur(68px) saturate(130%);
-  transform: translate3d(0,0,0) rotate(12deg);
-  animation: about-rotate 28s linear infinite;
-  opacity: 0.98;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
+  background-size: 120px 120px, 220px 220px;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  filter: blur(0px);
+  animation: about-stars-move 80s linear infinite, about-stars-flicker 6s ease-in-out infinite;
+}
+
+@keyframes about-blob-drift {
+  0% { transform: translate3d(0,0,0) scale(1); filter: blur(72px) saturate(140%); }
+  25% { transform: translate3d(-6vw,3vw,0) scale(1.02); filter: blur(64px) saturate(150%); }
+  50% { transform: translate3d(6vw,-4vw,0) scale(1.04); filter: blur(80px) saturate(160%); }
+  75% { transform: translate3d(-3vw,6vw,0) scale(1.03); filter: blur(68px) saturate(150%); }
+  100% { transform: translate3d(0,0,0) scale(1); filter: blur(72px) saturate(140%); }
+}
+
+@keyframes about-stars-move {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: -1600px 0, 1600px 0; }
+}
+@keyframes about-stars-flicker {
+  0% { opacity: 0.55; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.55; }
 }
 
 /* Neon button/glass helpers */
