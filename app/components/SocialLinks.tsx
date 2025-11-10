@@ -1,7 +1,8 @@
 export default function SocialLinks({ className = '' }: { className?: string }) {
   const SIMPLE = (slug: string, color = 'ffffff') => `https://cdn.simpleicons.org/${slug}/${color}`;
 
-  // Remove Instagram, add LinkedIn. Use white icons for better contrast on dark background
+  // Social links: LinkedIn added, icons colored cyan for better visibility on dark background
+  const CYAN = '06B6D4'; // cyan hex
   const links = [
     { name: 'X', href: 'https://x.com/banderradein', slug: 'x' },
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/banderradein', slug: 'linkedin' },
@@ -18,10 +19,10 @@ export default function SocialLinks({ className = '' }: { className?: string }) 
           rel="noopener noreferrer"
           aria-label={l.name}
           title={l.name}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-gray-800/50 hover:bg-gray-700/70 transition shadow-sm"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-gray-800/40 hover:bg-gray-700/60 transition shadow-sm"
         >
-          {/* fetch white icon for higher contrast; add subtle brightness filter */}
-          <img src={SIMPLE(l.slug, 'ffffff')} alt={l.name} width={18} height={18} className="filter brightness-125" />
+          {/* fetch cyan icon for higher contrast on dark background */}
+          <img src={SIMPLE(l.slug, CYAN)} alt={l.name} width={18} height={18} className="filter brightness-110" />
         </a>
       ))}
     </div>
