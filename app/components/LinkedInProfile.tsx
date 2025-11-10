@@ -20,6 +20,7 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
       }
       const json = await res.json();
       if (!res.ok) {
+        // don't auto-redirect; surface the status to the UI
         setError(json?.error || 'Failed to load profile');
       } else {
         setData(json);
@@ -28,6 +29,19 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
         if (fetchedSummary && typeof onSummary === 'function') {
           try { onSummary(fetchedSummary); } catch (e) {}
         }
+
+        // try to fetch posts and notify parent
+        if (typeof onPosts === 'function') {
+          try {
+            const postsRes = await fetch('/api/linkedin/posts');
+            if (postsRes.ok) {
+              const postsJson = await postsRes.json();
+              try { onPosts(postsJson); } catch (e) {}
+            } else {
+              // if unauthorized or other, ignore here
+            }
+          } catch (e) {}
+        }
       }
     } catch (err: any) {
       setError(err?.message || 'Network error');
@@ -35,6 +49,12 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    // attempt to load profile automatically; if not authorized this will setError but won't redirect
+    loadProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Extract summary and experiences from response
   function extractExperience(profileData: any) {
