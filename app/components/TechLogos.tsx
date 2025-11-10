@@ -34,8 +34,8 @@ const logos: Logo[] = [
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
-  // Linux - styled badge
-  { name: "Linux", label: "Linux", bg: "#0f172a", fg: "#34D399", desc: "Open-source family of Unix-like operating systems, widely used for servers, containers, and development environments." },
+  // Linux (use Simple Icons slug so a logo image is shown)
+  { name: "Linux", slug: "linux", color: "FCC624", desc: "Open-source family of Unix-like operating systems, widely used for servers, containers, and development environments." },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
