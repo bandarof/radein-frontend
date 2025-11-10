@@ -2,6 +2,7 @@ import LinkedInEmbed from '../components/LinkedInEmbed';
 import LinkedInProfile from '../components/LinkedInProfile';
 import Hero from '../components/Hero';
 import AboutBackground from '../components/AboutBackground';
+import AboutParticles from '../components/AboutParticles';
 
 export const metadata = {
   title: 'About — Bander Radein',
