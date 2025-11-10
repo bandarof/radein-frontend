@@ -15,7 +15,7 @@ export default function AboutClient() {
 
       <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="md:col-span-2 pop-in delay-300">
-          <h3 className="text-xl font-semibold mb-4 pop-in delay-350">LinkedIn Profile</h3>
+          <h3 className="text-xl font-semibold mb-4 pop-in delay-350">Summary</h3>
           <div className="pop-in delay-400">
             <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" initialSummary={defaultText} />
           </div>
