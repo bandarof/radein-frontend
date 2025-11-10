@@ -51,75 +51,92 @@ export default function Hero() {
       <div className="pointer-events-none absolute -top-12 -right-12 w-56 h-56 rounded-full bg-cyan-400/14 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-6 w-72 h-72 rounded-full bg-indigo-500/12 blur-2xl" />
 
-      {/* tech background animation - electric pulses */}
+      {/* tech background animation - electric pulses (brighter faster) */}
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-        <svg className="w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <svg className="w-full h-full opacity-60" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
           <defs>
             <linearGradient id="pulseGrad" x1="0" x2="1">
-              <stop offset="0" stopColor="#06b6d4" stopOpacity="0.9" />
-              <stop offset="1" stopColor="#7c3aed" stopOpacity="0.9" />
+              <stop offset="0" stopColor="#00f5ff" stopOpacity="1" />
+              <stop offset="1" stopColor="#a855f7" stopOpacity="1" />
             </linearGradient>
 
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+            <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="10" result="coloredBlur" />
               <feMerge>
+                <feMergeNode in="coloredBlur" />
                 <feMergeNode in="coloredBlur" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
 
             <g id="chip">
-              <rect x="0" y="0" width="120" height="80" rx="8" ry="8" fill="#0b1220" stroke="rgba(99,102,241,0.18)" strokeWidth="1" />
-              <rect x="12" y="12" width="96" height="56" rx="6" ry="6" fill="#07101a" />
+              <rect x="0" y="0" width="120" height="80" rx="8" ry="8" fill="#07101a" stroke="rgba(168,85,247,0.14)" strokeWidth="1" />
+              <rect x="12" y="12" width="96" height="56" rx="6" ry="6" fill="#051018" />
             </g>
           </defs>
 
           {/* grid of chips */}
-          <g opacity="0.9">
-            <use href="#chip" x="80" y="60" />
-            <use href="#chip" x="320" y="40" />
-            <use href="#chip" x="560" y="70" />
-            <use href="#chip" x="760" y="120" />
-            <use href="#chip" x="220" y="200" />
-            <use href="#chip" x="480" y="220" />
+          <g opacity="0.98">
+            <use href="#chip" x="60" y="40" />
+            <use href="#chip" x="280" y="30" />
+            <use href="#chip" x="500" y="50" />
+            <use href="#chip" x="700" y="110" />
+            <use href="#chip" x="200" y="180" />
+            <use href="#chip" x="460" y="200" />
+            <use href="#chip" x="820" y="180" />
           </g>
 
-          {/* traces connecting chips */}
-          <g stroke="url(#pulseGrad)" strokeWidth="2" fill="none" strokeLinecap="round" strokeOpacity="0.75">
-            <path id="t1" d="M200 100 C260 90, 320 80, 380 90 C440 100, 500 120, 560 110" strokeDasharray="6 8">
-              <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="4s" repeatCount="indefinite" />
+          {/* traces connecting chips - faster dash animation */}
+          <g stroke="url(#pulseGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeOpacity="0.95">
+            <path id="t1" d="M200 100 C260 90, 320 80, 380 90 C440 100, 500 120, 560 110" strokeDasharray="6 6">
+              <animate attributeName="stroke-dashoffset" from="0" to="-120" dur="2s" repeatCount="indefinite" />
             </path>
-            <path id="t2" d="M140 260 C220 240, 300 230, 380 240 C460 250, 540 260, 620 250" strokeDasharray="6 8" strokeOpacity="0.6">
-              <animate attributeName="stroke-dashoffset" from="0" to="80" dur="5s" repeatCount="indefinite" />
+            <path id="t2" d="M140 260 C220 240, 300 230, 380 240 C460 250, 540 260, 620 250" strokeDasharray="6 6" strokeOpacity="0.85">
+              <animate attributeName="stroke-dashoffset" from="0" to="120" dur="2.4s" repeatCount="indefinite" />
             </path>
-            <path id="t3" d="M640 140 C700 120, 760 110, 860 150" strokeDasharray="6 8" strokeOpacity="0.5">
-              <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="6s" repeatCount="indefinite" />
+            <path id="t3" d="M640 140 C700 120, 760 110, 860 150" strokeDasharray="6 6" strokeOpacity="0.8">
+              <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="2.8s" repeatCount="indefinite" />
             </path>
           </g>
 
-          {/* electric pulse balls that travel along traces with glow */}
+          {/* electric pulse balls that travel along traces with stronger glow */}
           <g filter="url(#glow)">
-            <circle r="6" fill="url(#pulseGrad)">
-              <animateMotion dur="3.6s" repeatCount="indefinite">
+            <circle r="8" fill="url(#pulseGrad)">
+              <animateMotion dur="1.6s" repeatCount="indefinite">
+                <mpath href="#t1" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0.2;1;0.2" dur="1.6s" repeatCount="indefinite" />
+            </circle>
+
+            <circle r="6" fill="#00f5ff" opacity="1">
+              <animateMotion dur="1.9s" repeatCount="indefinite">
+                <mpath href="#t2" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0.2;1;0.2" dur="1.9s" repeatCount="indefinite" />
+            </circle>
+
+            <circle r="6" fill="#a855f7" opacity="1">
+              <animateMotion dur="2.2s" repeatCount="indefinite">
+                <mpath href="#t3" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0.2;1;0.2" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+
+            {/* secondary faster micro-pulses */}
+            <circle r="3.5" fill="#7c3aed" opacity="0.95">
+              <animateMotion dur="1.1s" repeatCount="indefinite">
                 <mpath href="#t1" />
               </animateMotion>
             </circle>
-
-            <circle r="5" fill="#06b6d4" opacity="0.95">
-              <animateMotion dur="4.4s" repeatCount="indefinite">
+            <circle r="3.5" fill="#00f5ff" opacity="0.95">
+              <animateMotion dur="1.3s" repeatCount="indefinite">
                 <mpath href="#t2" />
-              </animateMotion>
-            </circle>
-
-            <circle r="4" fill="#7c3aed" opacity="0.95">
-              <animateMotion dur="5s" repeatCount="indefinite">
-                <mpath href="#t3" />
               </animateMotion>
             </circle>
           </g>
 
           {/* subtle grid lines for circuitry look */}
-          <g stroke="rgba(255,255,255,0.03)" strokeWidth="1">
+          <g stroke="rgba(255,255,255,0.04)" strokeWidth="1">
             <path d="M0 0 L1000 0 M0 80 L1000 80 M0 160 L1000 160 M0 240 L1000 240 M0 320 L1000 320" />
             <path d="M0 0 L0 500 M120 0 L120 500 M240 0 L240 500 M360 0 L360 500 M480 0 L480 500 M600 0 L600 500 M720 0 L720 500 M840 0 L840 500 M960 0 L960 500" />
           </g>
