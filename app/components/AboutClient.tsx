@@ -7,22 +7,24 @@ import LinkedInEmbed from './LinkedInEmbed';
 export default function AboutClient() {
   const defaultText = `Results-driven business leader with a computer engineering technology degree and over 20 years of experience in cybersecurity, software development, and IT strategy with a hint of travel & tourism. Proven success in client onboarding, automation, fintech advisory, and operational transformation, now forging into blockchain and AI. Fluent in Arabic and English, with a strong track record across the GCC and some parts of Europe. Passionate about elevating customer experiences, empowering support teams, and scaling high-performance service operations.`;
 
+  const [posts, setPosts] = useState<any | null>(null);
+
   return (
     <section className="container mx-auto px-6 py-12 -mt-6">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold pop-in delay-100">About</h2>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="md:col-span-2 pop-in delay-300">
           <h3 className="text-xl font-semibold mb-4 pop-in delay-350">Summary</h3>
           <div className="pop-in delay-400">
-            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" initialSummary={defaultText} />
+            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" initialSummary={defaultText} onPosts={(p:any)=>setPosts(p)} />
           </div>
 
-          <div className="mt-8 pop-in delay-450">
+          <div className="mt-6 pop-in delay-450">
             <h3 className="text-xl font-semibold mb-4">LinkedIn Feed</h3>
-            <LinkedInEmbed profileUrl="https://www.linkedin.com/in/bandarof/" />
+            <LinkedInEmbed profileUrl="https://www.linkedin.com/in/bandarof/" posts={posts} />
           </div>
         </div>
 
