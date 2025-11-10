@@ -175,32 +175,58 @@ body {
 .fade-up.delay-600 { animation-delay: 560ms; }
 .fade-up.delay-700 { animation-delay: 660ms; }
 
+/* New pop-in entrance animation: stronger, with rotation and scale */
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(22px) scale(.92) rotate(-3deg); filter: blur(2px); }
+  60% { transform: translateY(-6px) scale(1.03) rotate(2deg); }
+  to { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); filter: blur(0); }
+}
+.pop-in { opacity: 0; transform: translateY(22px) scale(.92) rotate(-3deg); animation: popIn 700ms cubic-bezier(.22,.9,.28,1) forwards; }
+.pop-in.delay-100 { animation-delay: 100ms; }
+.pop-in.delay-200 { animation-delay: 200ms; }
+.pop-in.delay-300 { animation-delay: 300ms; }
+.pop-in.delay-400 { animation-delay: 400ms; }
+.pop-in.delay-500 { animation-delay: 500ms; }
+.pop-in.delay-600 { animation-delay: 600ms; }
+.pop-in.delay-700 { animation-delay: 700ms; }
+
+/* moving stripe overlay for stronger visual interest */
+@keyframes stripeMove {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: -720px 0, 720px 0; }
+}
+
 /* stronger about background visuals */
 .about-bg::before {
   content: '';
   position: absolute;
-  left: -10%;
-  top: 6%;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle at 20% 30%, rgba(124,58,237,0.18), transparent 30%), radial-gradient(circle at 80% 70%, rgba(34,211,238,0.12), transparent 30%);
-  filter: blur(88px) saturate(140%);
+  left: -14%;
+  top: 4%;
+  width: 80vw;
+  height: 80vw;
+  background:
+    repeating-linear-gradient(120deg, rgba(255,255,255,0.01) 0 6px, transparent 6px 12px),
+    radial-gradient(circle at 18% 30%, rgba(124,58,237,0.22), transparent 26%),
+    radial-gradient(circle at 82% 68%, rgba(34,211,238,0.14), transparent 28%);
+  filter: blur(120px) saturate(150%);
   transform: translate3d(0,0,0);
-  animation: about-drift 20s linear infinite alternate;
-  opacity: 0.98;
+  animation: about-drift 16s linear infinite alternate;
+  opacity: 0.99;
+  background-size: 1200px 1200px, cover, cover;
+  animation: about-drift 16s linear infinite alternate, stripeMove 20s linear infinite;
 }
 .about-bg::after {
   content: '';
   position: absolute;
-  right: -6%;
-  bottom: -4%;
-  width: 44vw;
-  height: 44vw;
-  background: conic-gradient(from 120deg at 50% 50%, rgba(99,102,241,0.12), rgba(236,72,153,0.08));
-  filter: blur(48px) saturate(120%);
+  right: -4%;
+  bottom: -2%;
+  width: 48vw;
+  height: 48vw;
+  background: conic-gradient(from 120deg at 50% 50%, rgba(99,102,241,0.16), rgba(236,72,153,0.10));
+  filter: blur(68px) saturate(130%);
   transform: translate3d(0,0,0) rotate(12deg);
-  animation: about-rotate 34s linear infinite;
-  opacity: 0.95;
+  animation: about-rotate 28s linear infinite;
+  opacity: 0.98;
 }
 
 /* Neon button/glass helpers */
