@@ -68,7 +68,6 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary 
           <div className="py-6">
             {initialSummary ? (
               <div className="mb-4">
-                <h3 className="text-lg font-medium">Summary</h3>
                 <p className="mt-2 text-gray-300 text-sm leading-relaxed">{initialSummary}</p>
               </div>
             ) : (
