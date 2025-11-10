@@ -23,6 +23,11 @@ export default function LinkedInProfile({ profileUrl, onSummary }: { profileUrl:
         setError(json?.error || 'Failed to load profile');
       } else {
         setData(json);
+        // call parent callback with best-effort summary
+        const fetchedSummary = json?.profile?.summary || json?.me?.summary || json?.profile?.headline || json?.me?.localizedHeadline || null;
+        if (fetchedSummary && typeof onSummary === 'function') {
+          try { onSummary(fetchedSummary); } catch (e) {}
+        }
       }
     } catch (err: any) {
       setError(err?.message || 'Network error');
