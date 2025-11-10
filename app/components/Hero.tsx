@@ -175,23 +175,11 @@ export default function Hero() {
             Bander Radein
           </h1>
 
-          <div style={{display: 'flex', flexDirection: 'column', position: 'relative', height: 'auto', fontWeight: 600}}>
-            <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-              <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-                <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-                  <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-                    <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-                      <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
-                        Building Digital Powerhouses
-                      </blockquote>
-                    </blockquote>
-                  </blockquote>
-                </blockquote>
-              </blockquote>
-            </blockquote>
+          <div className="mt-3">
+            <p className="ml-10 font-semibold text-lg leading-tight">Building Digital Powerhouses</p>
           </div>
 
-          <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
+          <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden={true}></div>
 
           <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
             I create scalable web apps & blockchain-ready platforms that drive business growth
