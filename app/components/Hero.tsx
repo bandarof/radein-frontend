@@ -51,6 +51,117 @@ export default function Hero() {
       <div className="pointer-events-none absolute -top-12 -right-12 w-56 h-56 rounded-full bg-cyan-400/14 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-6 w-72 h-72 rounded-full bg-indigo-500/12 blur-2xl" />
 
+      {/* tech background animation - data packets flowing between components */}
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+        <svg className="w-full h-full opacity-70" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <defs>
+            <linearGradient id="dataGrad" x1="0" x2="1">
+              <stop offset="0" stopColor="#00f5ff" stopOpacity="1" />
+              <stop offset="1" stopColor="#7c3aed" stopOpacity="1" />
+            </linearGradient>
+
+            <filter id="bigGlow" x="-200%" y="-200%" width="400%" height="400%">
+              <feGaussianBlur stdDeviation="12" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <g id="chip">
+              <rect x="0" y="0" width="120" height="80" rx="10" ry="10" fill="#071018" stroke="rgba(124,58,237,0.18)" strokeWidth="1" />
+              <rect x="10" y="10" width="100" height="60" rx="6" ry="6" fill="#031018" />
+            </g>
+          </defs>
+
+          {/* chips layout */}
+          <g opacity="0.98">
+            <use href="#chip" x="60" y="40" />
+            <use href="#chip" x="300" y="30" />
+            <use href="#chip" x="540" y="50" />
+            <use href="#chip" x="760" y="120" />
+            <use href="#chip" x="220" y="200" />
+            <use href="#chip" x="480" y="200" />
+            <use href="#chip" x="820" y="180" />
+          </g>
+
+          {/* traces */}
+          <g stroke="url(#dataGrad)" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeOpacity="0.95">
+            <path id="t1" d="M120 80 C200 60, 280 50, 360 70 C440 90, 520 110, 600 100" strokeDasharray="5 7">
+              <animate attributeName="stroke-dashoffset" from="0" to="-160" dur="2s" repeatCount="indefinite" />
+            </path>
+            <path id="t2" d="M320 70 C380 80, 440 100, 520 120 C600 140, 680 160, 760 150" strokeDasharray="5 7" strokeOpacity="0.85">
+              <animate attributeName="stroke-dashoffset" from="0" to="160" dur="2.2s" repeatCount="indefinite" />
+            </path>
+            <path id="t3" d="M200 220 C300 200, 420 190, 540 200 C660 210, 780 220, 880 200" strokeDasharray="5 7" strokeOpacity="0.8">
+              <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="2.6s" repeatCount="indefinite" />
+            </path>
+          </g>
+
+          {/* data packets flowing along traces - staggered starts for continuous flow */}
+          <g filter="url(#bigGlow)">
+            {/* main fast stream on t1 */}
+            <rect width="18" height="8" rx="3" fill="url(#dataGrad)">
+              <animateMotion dur="1.2s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t1" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.2s" repeatCount="indefinite" />
+            </rect>
+            <rect width="18" height="8" rx="3" fill="#00ffd1">
+              <animateMotion dur="1.2s" begin="0.3s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t1" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.3s" repeatCount="indefinite" />
+            </rect>
+            <rect width="18" height="8" rx="3" fill="#a78bfa">
+              <animateMotion dur="1.2s" begin="0.6s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t1" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.6s" repeatCount="indefinite" />
+            </rect>
+
+            {/* secondary stream on t2 */}
+            <rect width="12" height="6" rx="2" fill="#00ffd1">
+              <animateMotion dur="1.6s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t2" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.6s" repeatCount="indefinite" />
+            </rect>
+            <rect width="12" height="6" rx="2" fill="#a78bfa">
+              <animateMotion dur="1.6s" begin="0.4s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t2" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.6s" begin="0.4s" repeatCount="indefinite" />
+            </rect>
+
+            {/* tertiary stream on t3 */}
+            <rect width="14" height="7" rx="3" fill="#7c3aed">
+              <animateMotion dur="1.4s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t3" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.4s" repeatCount="indefinite" />
+            </rect>
+            <rect width="14" height="7" rx="3" fill="#00f5ff">
+              <animateMotion dur="1.4s" begin="0.5s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#t3" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;1;0" dur="1.4s" begin="0.5s" repeatCount="indefinite" />
+            </rect>
+          </g>
+
+          {/* faint circuitry grid for context */}
+          <g stroke="rgba(255,255,255,0.03)" strokeWidth="1">
+            <path d="M0 0 L1000 0 M0 80 L1000 80 M0 160 L1000 160 M0 240 L1000 240 M0 320 L1000 320" />
+            <path d="M0 0 L0 500 M120 0 L120 500 M240 0 L240 500 M360 0 L360 500 M480 0 L480 500 M600 0 L600 500 M720 0 L720 500 M840 0 L840 500 M960 0 L960 500" />
+          </g>
+          <g stroke="rgba(255,255,255,0.04)" strokeWidth="1">
+            <path d="M0 0 L1000 0 M0 80 L1000 80 M0 160 L1000 160 M0 240 L1000 240 M0 320 L1000 320" />
+            <path d="M0 0 L0 500 M120 0 L120 500 M240 0 L240 500 M360 0 L360 500 M480 0 L480 500 M600 0 L600 500 M720 0 L720 500 M840 0 L840 500 M960 0 L960 500" />
+          </g>
+        </svg>
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -67,7 +178,7 @@ export default function Hero() {
           <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
 
           <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
-            I build high-tech, modern web applications and integrate cutting-edge AI and blockchain solutions.
+            I build high-tech, modern web applications and integrate cutting-edge Ai and blockchain solutions.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
@@ -149,7 +260,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden lg:block flex-shrink-0">
+        <div className="hidden lg:block flex-shrink-0 transform lg:-translate-y-12 xl:-translate-y-20">
           <div className="relative mx-auto md:mx-0 w-56 h-56 rounded-2xl glass neon-border flex items-center justify-center overflow-hidden">
             <img
               src="/profile.png"
