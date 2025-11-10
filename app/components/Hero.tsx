@@ -51,37 +51,77 @@ export default function Hero() {
       <div className="pointer-events-none absolute -top-12 -right-12 w-56 h-56 rounded-full bg-cyan-400/14 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-6 w-72 h-72 rounded-full bg-indigo-500/12 blur-2xl" />
 
-      {/* tech background animation */}
+      {/* tech background animation - electric pulses */}
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-        <svg className="w-full h-full opacity-30" viewBox="0 0 800 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <svg className="w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
           <defs>
-            <linearGradient id="g1" x1="0" x2="1">
-              <stop offset="0" stopColor="#06b6d4" stopOpacity="0.6" />
-              <stop offset="1" stopColor="#6366f1" stopOpacity="0.6" />
+            <linearGradient id="pulseGrad" x1="0" x2="1">
+              <stop offset="0" stopColor="#06b6d4" stopOpacity="0.9" />
+              <stop offset="1" stopColor="#7c3aed" stopOpacity="0.9" />
             </linearGradient>
+
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <g id="chip">
+              <rect x="0" y="0" width="120" height="80" rx="8" ry="8" fill="#0b1220" stroke="rgba(99,102,241,0.18)" strokeWidth="1" />
+              <rect x="12" y="12" width="96" height="56" rx="6" ry="6" fill="#07101a" />
+            </g>
           </defs>
 
-          {/* animated connecting lines */}
-          <g stroke="url(#g1)" strokeWidth="1.5" fill="none" strokeLinecap="round">
-            <path d="M50 300 L200 220 L360 280 L520 200 L760 260" strokeDasharray="8 8">
-              <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="6s" repeatCount="indefinite" />
+          {/* grid of chips */}
+          <g opacity="0.9">
+            <use href="#chip" x="80" y="60" />
+            <use href="#chip" x="320" y="40" />
+            <use href="#chip" x="560" y="70" />
+            <use href="#chip" x="760" y="120" />
+            <use href="#chip" x="220" y="200" />
+            <use href="#chip" x="480" y="220" />
+          </g>
+
+          {/* traces connecting chips */}
+          <g stroke="url(#pulseGrad)" strokeWidth="2" fill="none" strokeLinecap="round" strokeOpacity="0.75">
+            <path id="t1" d="M200 100 C260 90, 320 80, 380 90 C440 100, 500 120, 560 110" strokeDasharray="6 8">
+              <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="4s" repeatCount="indefinite" />
             </path>
-            <path d="M60 80 L220 140 L380 60 L560 120 L740 50" strokeDasharray="8 8" opacity="0.8">
-              <animate attributeName="stroke-dashoffset" from="0" to="64" dur="8s" repeatCount="indefinite" />
+            <path id="t2" d="M140 260 C220 240, 300 230, 380 240 C460 250, 540 260, 620 250" strokeDasharray="6 8" strokeOpacity="0.6">
+              <animate attributeName="stroke-dashoffset" from="0" to="80" dur="5s" repeatCount="indefinite" />
+            </path>
+            <path id="t3" d="M640 140 C700 120, 760 110, 860 150" strokeDasharray="6 8" strokeOpacity="0.5">
+              <animate attributeName="stroke-dashoffset" from="0" to="-60" dur="6s" repeatCount="indefinite" />
             </path>
           </g>
 
-          {/* moving nodes */}
-          <g fill="#06b6d4">
-            <circle r="5" cx="50" cy="300">
-              <animateMotion dur="6s" repeatCount="indefinite" path="M0,0 L150,-80 L160,60 L170,-80 L240,40" />
+          {/* electric pulse balls that travel along traces with glow */}
+          <g filter="url(#glow)">
+            <circle r="6" fill="url(#pulseGrad)">
+              <animateMotion dur="3.6s" repeatCount="indefinite">
+                <mpath href="#t1" />
+              </animateMotion>
             </circle>
-            <circle r="4" cx="760" cy="260">
-              <animateMotion dur="7s" repeatCount="indefinite" path="M0,0 -150,-40 -200,20 -300,-60" />
+
+            <circle r="5" fill="#06b6d4" opacity="0.95">
+              <animateMotion dur="4.4s" repeatCount="indefinite">
+                <mpath href="#t2" />
+              </animateMotion>
             </circle>
-            <circle r="4.5" cx="60" cy="80">
-              <animateTransform attributeName="transform" type="scale" values="1;1.6;1" dur="4s" repeatCount="indefinite" />
+
+            <circle r="4" fill="#7c3aed" opacity="0.95">
+              <animateMotion dur="5s" repeatCount="indefinite">
+                <mpath href="#t3" />
+              </animateMotion>
             </circle>
+          </g>
+
+          {/* subtle grid lines for circuitry look */}
+          <g stroke="rgba(255,255,255,0.03)" strokeWidth="1">
+            <path d="M0 0 L1000 0 M0 80 L1000 80 M0 160 L1000 160 M0 240 L1000 240 M0 320 L1000 320" />
+            <path d="M0 0 L0 500 M120 0 L120 500 M240 0 L240 500 M360 0 L360 500 M480 0 L480 500 M600 0 L600 500 M720 0 L720 500 M840 0 L840 500 M960 0 L960 500" />
           </g>
         </svg>
       </div>
