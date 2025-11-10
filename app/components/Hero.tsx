@@ -149,7 +149,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hidden lg:block flex-shrink-0 lg:-mt-6 xl:-mt-10">
+        <div className="hidden lg:block flex-shrink-0 transform lg:-translate-y-12 xl:-translate-y-20">
           <div className="relative mx-auto md:mx-0 w-56 h-56 rounded-2xl glass neon-border flex items-center justify-center overflow-hidden">
             <img
               src="/profile.png"
