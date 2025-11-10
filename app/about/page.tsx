@@ -13,6 +13,7 @@ export default function AboutPage() {
   return (
     <main className="pt-16">
       <AboutBackground />
+      <AboutParticles />
       <section className="container mx-auto px-6 py-12 -mt-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold pop-in delay-100">About</h2>
