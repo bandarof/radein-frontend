@@ -119,6 +119,44 @@ body {
   100% { background-position: 0 0, 0 0; }
 }
 
+/* About page subtle background (distinct from home) */
+.about-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.about-bg::before {
+  content: '';
+  position: absolute;
+  left: -10%;
+  top: 10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle at 20% 30%, rgba(124,58,237,0.12), transparent 30%), radial-gradient(circle at 80% 70%, rgba(34,211,238,0.08), transparent 30%);
+  filter: blur(48px) saturate(120%);
+  transform: translate3d(0,0,0);
+  animation: about-drift 26s linear infinite alternate;
+}
+.about-bg::after {
+  content: '';
+  position: absolute;
+  right: -8%;
+  bottom: -6%;
+  width: 36vw;
+  height: 36vw;
+  background: conic-gradient(from 120deg at 50% 50%, rgba(99,102,241,0.06), rgba(236,72,153,0.04));
+  filter: blur(28px) saturate(110%);
+  transform: translate3d(0,0,0) rotate(12deg);
+  animation: about-rotate 40s linear infinite;
+}
+
+@keyframes about-drift {
+  0% { transform: translate3d(0,0,0) scale(1); opacity: 0.95 }
+  50% { transform: translate3d(5vw,-3vw,0) scale(1.03); opacity: 0.9 }
+  100% { transform: translate3d(0,0,0) scale(1); opacity: 0.95 }
+}
+@keyframes about-rotate {
+  0% { transform: translate3d(0,0,0) rotate(12deg) }
+  50% { transform: translate3d(-2vw,2vw,0) rotate(24deg) }
+  100% { transform: translate3d(0,0,0) rotate(12deg) }
+}
+
 /* Neon button/glass helpers */
 .neon-border {
   box-shadow: 0 0 0 1px rgba(34,211,238,0.22) inset, 0 10px 40px rgba(34,211,238,0.06), 0 0 28px rgba(99,102,241,0.04);
