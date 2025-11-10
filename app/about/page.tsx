@@ -21,11 +21,13 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div className="md:col-span-2">
-            <h3 className="text-xl font-semibold mb-4">LinkedIn Profile</h3>
-            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" />
+          <div className="md:col-span-2 fade-up delay-200">
+            <h3 className="text-xl font-semibold mb-4 fade-up delay-300">LinkedIn Profile</h3>
+            <div className="fade-up delay-350">
+              <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" />
+            </div>
 
-            <div className="mt-8">
+            <div className="mt-8 fade-up delay-400">
               <h3 className="text-xl font-semibold mb-4">LinkedIn Feed</h3>
               <LinkedInEmbed profileUrl="https://www.linkedin.com/in/bandarof/" />
             </div>
@@ -33,13 +35,13 @@ export default function AboutPage() {
 
           <aside className="md:col-span-1">
             <div className="sticky top-28 space-y-4">
-              <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-md">
+              <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-md fade-up delay-450">
                 <h4 className="font-semibold">Contact</h4>
                 <p className="text-gray-400 mt-2">Email: hello@radein.com</p>
                 <p className="text-gray-400">Location: Remote</p>
               </div>
 
-              <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-md">
+              <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-md fade-up delay-500">
                 <h4 className="font-semibold">Quick Links</h4>
                 <ul className="mt-2 space-y-2 text-gray-400">
                   <li><a href="/portfolio" className="hover:text-white">Portfolio</a></li>
