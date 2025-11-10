@@ -5,22 +5,19 @@ import LinkedInProfile from './LinkedInProfile';
 import LinkedInEmbed from './LinkedInEmbed';
 
 export default function AboutClient() {
-  const [summary, setSummary] = useState<string | null>(null);
-
   const defaultText = `Results-driven business leader with a computer engineering technology degree and over 20 years of experience in cybersecurity, software development, and IT strategy with a hint of travel & tourism. Proven success in client onboarding, automation, fintech advisory, and operational transformation, now forging into blockchain and AI. Fluent in Arabic and English, with a strong track record across the GCC and some parts of Europe. Passionate about elevating customer experiences, empowering support teams, and scaling high-performance service operations.`;
 
   return (
     <section className="container mx-auto px-6 py-12 -mt-6">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold pop-in delay-100">About</h2>
-        <p className="mt-4 text-gray-300 text-lg pop-in delay-200">{summary || defaultText}</p>
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="md:col-span-2 pop-in delay-300">
           <h3 className="text-xl font-semibold mb-4 pop-in delay-350">LinkedIn Profile</h3>
           <div className="pop-in delay-400">
-            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" onSummary={(s) => setSummary(s)} />
+            <LinkedInProfile profileUrl="https://www.linkedin.com/in/bandarof/" initialSummary={defaultText} />
           </div>
 
           <div className="mt-8 pop-in delay-450">
