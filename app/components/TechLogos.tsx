@@ -31,7 +31,7 @@ const logos: Logo[] = [
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
   { name: "ArcGIS", slug: "arcgis", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
   { name: "SketchUp", slug: "sketchup", desc: "3D modeling software used for architectural, interior, and product design." },
-  { name: "Avaya", slug: "avaya", color: "CC0000", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
+  { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
