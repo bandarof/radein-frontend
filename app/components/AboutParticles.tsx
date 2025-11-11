@@ -89,15 +89,14 @@ export default function AboutParticles() {
         ctx.globalAlpha = Math.min(1, alpha);
         // draw soft circle
         const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 3);
-        g.addColorStop(0, p.color.replace(/rgba\(([^)]+)\)/, (m: string, g1: string) => {
-          // ensure filled color has slightly stronger alpha
-          const parts = g1.split(',').map(s => s.trim());
-          return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${Math.min(1, alpha)})`;
-        }));
-        g.addColorStop(0.3, p.color.replace(/rgba\(([^)]+)\)/, (m: string, g1: string) => {
-          const parts = g1.split(',').map(s => s.trim());
-          return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${Math.min(0.45, alpha * 0.6)})`;
-        }));
+        // compute color stops safely (avoid implicit any in replace callback)
+        const rgbaMatch = p.color.match(/rgba\(([^)]+)\)/);
+        const rgbaInner = rgbaMatch ? rgbaMatch[1] : '255,255,255,1';
+        const parts0 = rgbaInner.split(',').map(s => s.trim());
+        const stop0 = `rgba(${parts0[0]}, ${parts0[1]}, ${parts0[2]}, ${Math.min(1, alpha)})`;
+        const stop03 = `rgba(${parts0[0]}, ${parts0[1]}, ${parts0[2]}, ${Math.min(0.45, alpha * 0.6)})`;
+        g.addColorStop(0, p.color.replace(/rgba\([^)]+\)/, stop0));
+        g.addColorStop(0.3, p.color.replace(/rgba\([^)]+\)/, stop03));
         g.addColorStop(1, 'rgba(255,255,255,0)');
 
         ctx.fillStyle = g;
