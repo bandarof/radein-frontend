@@ -30,7 +30,7 @@ const logos: Logo[] = [
   { name: "web3.js", slug: "web3dotjs", color: "143CFB", desc: "JavaScript libraries for interacting with Ethereum and EVM-compatible blockchains." },
   { name: "BNB Smart Chain", slug: "binance", color: "F3BA2F", desc: "EVM-compatible blockchain (BNB Smart Chain) for fast, low-cost transactions and scalable dApps." },
   { name: "Postman", slug: "postman", color: "FF6C37", desc: "API development environment for building, testing, and documenting APIs with collaboration." },
-  { name: "Builder.io", src: "/builderio.svg", color: "6200EA", desc: "Visual headless CMS and page builder for composing and delivering content-driven experiences." },
+  { name: "Builder.io", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2F5cedf6b893bb41b5af30ce60412824ba?format=webp&width=800", color: "6200EA", desc: "Visual headless CMS and page builder for composing and delivering content-driven experiences." },
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
   { name: "ArcGIS", slug: "arcgis", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
   { name: "SketchUp", slug: "sketchup", desc: "3D modeling software used for architectural, interior, and product design." },
