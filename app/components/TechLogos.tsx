@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Logo = {
   name: string;
@@ -30,6 +30,7 @@ const logos: Logo[] = [
   { name: "web3.js", slug: "web3dotjs", color: "143CFB", desc: "JavaScript libraries for interacting with Ethereum and EVM-compatible blockchains." },
   { name: "BNB Smart Chain", slug: "binance", color: "F3BA2F", desc: "EVM-compatible blockchain (BNB Smart Chain) for fast, low-cost transactions and scalable dApps." },
   { name: "Postman", slug: "postman", color: "FF6C37", desc: "API development environment for building, testing, and documenting APIs with collaboration." },
+  { name: "Jira", slug: "jira", color: "0052CC", desc: "Issue tracking and agile project management by Atlassian for planning and delivery." },
   { name: "Builder.io", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2F5cedf6b893bb41b5af30ce60412824ba?format=webp&width=800", color: "6200EA", desc: "Visual headless CMS and page builder for composing and delivering content-driven experiences." },
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
   { name: "ArcGIS", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbe535e6a481f4abb8371761ed42d1c71?format=webp&width=800", color: "006BAD", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
@@ -51,17 +52,45 @@ const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicon
 
 export default function TechLogos() {
   const [active, setActive] = useState<Logo | null>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
-  function toggleActive(logo: Logo) {
+  function positionFromEl(el: HTMLElement) {
+    const container = containerRef.current;
+    if (!container) return;
+    const cr = container.getBoundingClientRect();
+    const tr = el.getBoundingClientRect();
+    const top = tr.bottom - cr.top + 8; // 8px gap below the logo tile
+    const left = tr.left - cr.left + tr.width / 2; // center horizontally on the tile
+    setPos({ top, left });
+  }
+
+  function handleLogoClick(e: React.MouseEvent<HTMLDivElement>, logo: Logo) {
+    positionFromEl(e.currentTarget);
     setActive((curr) => (curr?.name === logo.name ? null : logo));
   }
 
   function onKey(e: React.KeyboardEvent<HTMLDivElement>, logo: Logo) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleActive(logo);
+      positionFromEl(e.currentTarget);
+      setActive((curr) => (curr?.name === logo.name ? null : logo));
     }
   }
+
+  useEffect(() => {
+    function handleOutside(ev: MouseEvent) {
+      if (!panelRef.current || !containerRef.current) return;
+      const t = ev.target as Node;
+      if (active && !panelRef.current.contains(t) && !containerRef.current.contains(t)) {
+        setActive(null);
+        setPos(null);
+      }
+    }
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [active]);
 
   // Stable pseudo-random generator based on logo name
   function hashCode(str: string) {
@@ -78,7 +107,7 @@ export default function TechLogos() {
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
 
       {/* Single container (flex) with relative positioning to avoid changing DOM structure between server and client */}
-      <div className="flex flex-wrap items-center gap-3 opacity-95 relative">
+      <div ref={containerRef} className="flex flex-wrap items-center gap-3 opacity-95 relative">
         {logos.map((l) => {
           const h = hashCode(l.name);
           const delay = (h % 2200) / 1000; // 0 - 2.199s
@@ -102,7 +131,7 @@ export default function TechLogos() {
               aria-pressed={active?.name === l.name}
               aria-expanded={active?.name === l.name}
               aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
-              onClick={() => toggleActive(l)}
+              onClick={(e) => handleLogoClick(e, l)}
               onKeyDown={(e) => onKey(e, l)}
               style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
             >
@@ -135,15 +164,17 @@ export default function TechLogos() {
           );
         })}
 
-        {/* Absolutely positioned description panel to avoid pushing other content (like the profile picture) */}
-        {active && (
-          <div className="absolute left-0 right-0 mt-2 z-20 flex justify-center pointer-events-auto">
-            <div
-              id="tech-desc-panel"
-              className="w-full sm:w-[min(48rem,calc(100%-1rem))] rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm"
-              role="region"
-              aria-live="polite"
-            >
+        {/* Tech description popover anchored to clicked logo */}
+        {active && pos && (
+          <div
+            ref={panelRef}
+            id="tech-desc-panel"
+            className="absolute z-20 pointer-events-auto"
+            style={{ top: pos.top, left: pos.left, transform: 'translateX(-50%)' }}
+            role="region"
+            aria-live="polite"
+          >
+            <div className="max-w-md w-[min(28rem,calc(100%-1rem))] rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm">
               <div className="flex items-start gap-3">
                 <div className="logo-tile shrink-0 mt-0.5">
                   {active.src ? (
@@ -162,7 +193,7 @@ export default function TechLogos() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setActive(null)}
+                  onClick={() => { setActive(null); setPos(null); }}
                   className="ml-auto text-gray-400 hover:text-gray-200 transition"
                   aria-label="Close description"
                 >
