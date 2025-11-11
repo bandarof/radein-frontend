@@ -68,7 +68,7 @@ export default function TechLogos() {
         {logos.map((l) => (
           <div
             key={l.name}
-            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 logo-glow logo-pulse"
             title={l.name}
             role="button"
             tabIndex={0}
@@ -78,7 +78,7 @@ export default function TechLogos() {
             onClick={() => toggleActive(l)}
             onKeyDown={(e) => onKey(e, l)}
           >
-            <div className="logo-tile">
+            <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined }}>
               {l.src ? (
                 <img src={l.src} alt={l.name} width={20} height={20} />
               ) : l.slug ? (
