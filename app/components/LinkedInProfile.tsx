@@ -50,11 +50,6 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
     }
   }
 
-  useEffect(() => {
-    // attempt to load profile automatically; if not authorized this will setError but won't redirect
-    loadProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Extract summary and experiences from response
   function extractExperience(profileData: any) {
