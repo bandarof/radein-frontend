@@ -175,10 +175,14 @@ export default function Hero() {
             Bander Radein
           </h1>
 
-          <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
+          <div className="flex justify-end">
+            <p className="pr-10 font-semibold text-lg leading-tight text-right">Building Digital Powerhouses</p>
+          </div>
+
+          <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden={true}></div>
 
           <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
-            I build high-tech, modern web applications and integrate cutting-edge Ai and blockchain solutions.
+            I create scalable web apps & blockchain-ready platforms that drive business growth
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">

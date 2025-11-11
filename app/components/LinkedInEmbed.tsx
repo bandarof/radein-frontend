@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function LinkedInEmbed({ profileUrl, height = 640 }: { profileUrl: string; height?: number }) {
+export default function LinkedInEmbed({ profileUrl, height = 640, posts }: { profileUrl: string; height?: number; posts?: any | null }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any | null>(null);
@@ -13,8 +13,8 @@ export default function LinkedInEmbed({ profileUrl, height = 640 }: { profileUrl
     try {
       const res = await fetch('/api/linkedin/posts');
       if (res.status === 401) {
-        // Not authorized — redirect user to auth flow
-        window.location.href = '/api/linkedin/auth';
+        // Not authorized — surface error instead of redirecting
+        setError('Not authorized to fetch LinkedIn posts');
         return;
       }
       const json = await res.json();
@@ -30,10 +30,13 @@ export default function LinkedInEmbed({ profileUrl, height = 640 }: { profileUrl
     }
   }
 
+  // if posts are provided from parent, use them
+  const feed = posts || data;
+
   return (
     <div className="linkedin-embed w-full">
       <div style={{ minHeight: height }} className="mx-auto max-w-3xl bg-gray-900/60 border border-gray-800 rounded-md p-4">
-        {!data && (
+        {!feed && (
           <div className="text-center py-12">
             <p className="text-gray-300 mb-4">Load posts from LinkedIn for {profileUrl}</p>
             <button onClick={loadFeed} disabled={loading} className="px-6 py-3 rounded-md bg-cyan-400 text-gray-900 font-semibold hover:bg-cyan-300 transition">
@@ -46,10 +49,10 @@ export default function LinkedInEmbed({ profileUrl, height = 640 }: { profileUrl
           <div className="text-red-400 text-sm mt-4">{error}</div>
         )}
 
-        {data && (
+        {feed && (
           <div className="space-y-6">
-            {data.shares?.elements?.length ? (
-              data.shares.elements.map((s: any, i: number) => (
+            {feed.shares?.elements?.length ? (
+              feed.shares.elements.map((s: any, i: number) => (
                 <article key={i} className="p-4 bg-gray-900/70 border border-gray-800 rounded-md">
                   <pre className="whitespace-pre-wrap text-sm text-gray-200">{JSON.stringify(s, null, 2)}</pre>
                 </article>

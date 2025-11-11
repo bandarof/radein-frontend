@@ -7,7 +7,25 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Bander Radein',
-  description: 'Personal Portfolio & Career Profile',
+  description: 'Building Digital Powerhouses — I create scalable web apps & blockchain-ready platforms that drive business growth',
+  openGraph: {
+    title: 'Bander Radein',
+    description: 'Building Digital Powerhouses — I create scalable web apps & blockchain-ready platforms that drive business growth',
+    images: [
+      {
+        url: '/profile.png',
+        width: 250,
+        height: 250,
+        alt: 'Bander Radein',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary', // smaller image preview
+    title: 'Bander Radein',
+    description: 'Building Digital Powerhouses — I create scalable web apps & blockchain-ready platforms that drive business growth',
+    images: ['/profile.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
