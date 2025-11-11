@@ -98,7 +98,7 @@ export default function TechLogos() {
               onKeyDown={(e) => onKey(e, l)}
               style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
             >
-              <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined }}>
+              <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined, background: brighten ? 'rgba(255,255,255,0.04)' : undefined }}>
                 {l.src ? (
                   <img src={l.src} alt={l.name} width={20} height={20} style={brighten ? { filter: 'brightness(1.22)' } : undefined} />
                 ) : l.slug ? (
