@@ -51,19 +51,10 @@ const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicon
 
 export default function TechLogos() {
   const [active, setActive] = useState<Logo | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [panelStyle, setPanelStyle] = useState<{ left: number; top: number; placement?: 'bottom' | 'top' } | null>(null);
 
-  function toggleActive(logo: Logo) {
-    setActive((curr) => (curr?.name === logo.name ? null : logo));
-  }
-
-  function onKey(e: React.KeyboardEvent<HTMLDivElement>, logo: Logo) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleActive(logo);
-    }
-  }
-
-  // Stable pseudo-random generator based on logo name
   function hashCode(str: string) {
     let h = 0;
     for (let i = 0; i < str.length; i++) {
@@ -73,12 +64,87 @@ export default function TechLogos() {
     return Math.abs(h);
   }
 
+  function openForLogo(e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>, logo: Logo) {
+    const target = e.currentTarget as HTMLElement;
+    const container = containerRef.current;
+    if (!container || !target) {
+      setActive(logo);
+      return;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    // default position below the clicked logo, horizontally centered on logo
+    let left = targetRect.left - containerRect.left + targetRect.width / 2;
+    let top = targetRect.bottom - containerRect.top + 8; // 8px gap
+
+    setActive(logo);
+    setPanelStyle({ left, top, placement: 'bottom' });
+  }
+
+  function onKey(e: React.KeyboardEvent<HTMLDivElement>, logo: Logo) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openForLogo(e, logo);
+    }
+  }
+
+  // click outside handler - hide panel when clicking anywhere outside the panel and logos
+  useEffect(() => {
+    function onDocClick(ev: MouseEvent) {
+      const target = ev.target as Node | null;
+      if (!target) return;
+      if (panelRef.current && panelRef.current.contains(target)) return;
+      // allow clicks on logo controls to pass through (they will re-open/position the panel)
+      if (containerRef.current && containerRef.current.contains(target)) {
+        const el = (target as HTMLElement).closest('[data-tech-logo]');
+        if (el) return; // clicked a logo, do not close
+      }
+      // otherwise close
+      setActive(null);
+    }
+
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, []);
+
+  // after panel renders, adjust position to avoid overflow
+  useEffect(() => {
+    if (!panelStyle || !panelRef.current || !containerRef.current || !active) return;
+    const panelRect = panelRef.current.getBoundingClientRect();
+    const containerRect = containerRef.current.getBoundingClientRect();
+
+    let { left, top } = panelStyle;
+    const halfW = panelRect.width / 2;
+
+    // clamp left so panel stays within container
+    left = Math.max(halfW + 8, left);
+    left = Math.min(containerRect.width - halfW - 8, left);
+
+    // if panel overflows bottom, show above the logo
+    if (top + panelRect.height > containerRect.height) {
+      // show above
+      const activeEl = Array.from(containerRef.current.querySelectorAll('[data-tech-logo]')).find((el) => (el as HTMLElement).getAttribute('data-tech-name') === active.name) as HTMLElement | undefined;
+      if (activeEl) {
+        const targetRect = activeEl.getBoundingClientRect();
+        top = targetRect.top - containerRect.top - panelRect.height - 8;
+      }
+    }
+
+    // update if changed
+    setPanelStyle((prev) => {
+      if (!prev) return prev;
+      if (prev.left !== left || prev.top !== top) return { ...prev, left, top };
+      return prev;
+    });
+  }, [panelStyle, active]);
+
   return (
     <div className="w-full mb-6">
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
 
-      {/* Single container (flex) with relative positioning to avoid changing DOM structure between server and client */}
-      <div className="flex flex-wrap items-center gap-3 opacity-95 relative">
+      <div ref={containerRef} className="flex flex-wrap items-center gap-3 opacity-95 relative">
         {logos.map((l) => {
           const h = hashCode(l.name);
           const delay = (h % 2200) / 1000; // 0 - 2.199s
@@ -95,6 +161,8 @@ export default function TechLogos() {
           return (
             <div
               key={l.name}
+              data-tech-logo
+              data-tech-name={l.name}
               className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 logo-glow logo-pulse"
               title={l.name}
               role="button"
@@ -102,7 +170,7 @@ export default function TechLogos() {
               aria-pressed={active?.name === l.name}
               aria-expanded={active?.name === l.name}
               aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
-              onClick={() => toggleActive(l)}
+              onClick={(e) => openForLogo(e, l)}
               onKeyDown={(e) => onKey(e, l)}
               style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
             >
@@ -116,7 +184,6 @@ export default function TechLogos() {
                     style={isGitHub ? { filter: 'brightness(1.28) drop-shadow(0 6px 18px rgba(0,0,0,0.6))' } : brighten ? { filter: 'brightness(1.22)' } : undefined}
                   />
                 ) : l.slug ? (
-                  // fetch colored SVG from Simple Icons CDN using brand color when available
                   <img
                     src={isGitHub ? SIMPLE_ICONS(l.slug, 'ffffff') : SIMPLE_ICONS(l.slug, l.color || 'ffffff')}
                     alt={l.name}
@@ -135,12 +202,13 @@ export default function TechLogos() {
           );
         })}
 
-        {/* Absolutely positioned description panel to avoid pushing other content (like the profile picture) */}
-        {active && (
-          <div className="absolute left-0 right-0 mt-2 z-20 flex justify-center pointer-events-auto">
+        {/* Positioned description panel anchored to clicked logo */}
+        {active && panelStyle && (
+          <div className="absolute z-20 pointer-events-auto" style={{ left: panelStyle.left, top: panelStyle.top, transform: 'translateX(-50%)' }}>
             <div
+              ref={panelRef}
               id="tech-desc-panel"
-              className="w-full sm:w-[min(48rem,calc(100%-1rem))] rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm"
+              className="w-[min(48rem,calc(100%-1rem))] max-w-[48rem] rounded-lg border border-emerald-500/30 bg-gray-800/60 p-4 shadow-lg backdrop-blur-sm"
               role="region"
               aria-live="polite"
             >
