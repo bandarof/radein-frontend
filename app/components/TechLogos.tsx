@@ -37,7 +37,7 @@ const logos: Logo[] = [
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
-  { name: "Linux", slug: "linux", color: "000000", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
+  { name: "Linux", slug: "linux", color: "34D399", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
