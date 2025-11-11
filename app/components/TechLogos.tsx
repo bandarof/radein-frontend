@@ -29,13 +29,15 @@ const logos: Logo[] = [
   { name: "Supabase", slug: "supabase", color: "3ECF8E", desc: "Open source Firebase alternative: Postgres, Auth, Storage, and real‑time APIs." },
   { name: "web3.js", slug: "web3dotjs", color: "143CFB", desc: "JavaScript libraries for interacting with Ethereum and EVM-compatible blockchains." },
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
+  { name: "ArcGIS", slug: "arcgis", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
+  { name: "SketchUp", slug: "sketchup", desc: "3D modeling software used for architectural, interior, and product design." },
+  { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
-  // UNIX (no canonical Simple Icons entry) - styled badge
-  { name: "UNIX", label: "UNIX", bg: "#0f172a", fg: "#34D399", desc: "Family of multitasking, multiuser operating systems and the philosophy/tools around them." },
+  { name: "Linux", slug: "linux", color: "FBBF24", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;

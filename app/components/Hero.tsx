@@ -178,7 +178,7 @@ export default function Hero() {
           <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
 
           <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
-            I build high-tech, modern web applications and integrate cutting-edge Ai and blockchain solutions.
+            Driving business growth through intelligent automation, secure blockchain integration, and next-gen web technology.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
