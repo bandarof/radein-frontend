@@ -36,13 +36,15 @@ const logos: Logo[] = [
   { name: "SketchUp", slug: "sketchup", color: "E92930", desc: "3D modeling software used for architectural, interior, and product design." },
   { name: "SAP", slug: "sap", color: "006BB8", desc: "Enterprise software for ERP, analytics, and business process management." },
   { name: "cPanel", slug: "cpanel", color: "FF6C2C", desc: "Web hosting control panel for managing servers, domains, and email via a graphical interface." },
-  { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
+  { name: "Avaya", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fe2a2ce935ed649d290cbc9e1af451d3d?format=webp&width=800", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
+  { name: "Visual Studio", src: "https://visualstudio.microsoft.com/wp-content/uploads/2021/10/Product-Icon.svg", color: "5C2D91", desc: "Integrated development environment by Microsoft for building apps and services." },
+  { name: "ICD-10", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbfb69800f8ab4019a6fa20d99c43c1fd?format=webp&width=800", desc: "International Classification of Diseases, 10th Revision medical coding standard." },
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
-  { name: "Linux", slug: "linux", color: "FBBF24", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
+  { name: "Linux", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2F0317244a793643bfa681c568a5208840?format=webp&width=800", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
@@ -61,40 +63,77 @@ export default function TechLogos() {
     }
   }
 
+  // Stable pseudo-random generator based on logo name
+  function hashCode(str: string) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+      h = (h << 5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h);
+  }
+
   return (
     <div className="w-full mb-6">
       <p className="text-xs uppercase tracking-widest text-gray-400 mb-3">Tech I work with</p>
 
       {/* Single container (flex) with relative positioning to avoid changing DOM structure between server and client */}
       <div className="flex flex-wrap items-center gap-3 opacity-95 relative">
-        {logos.map((l) => (
-          <div
-            key={l.name}
-            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 logo-glow logo-pulse"
-            title={l.name}
-            role="button"
-            tabIndex={0}
-            aria-pressed={active?.name === l.name}
-            aria-expanded={active?.name === l.name}
-            aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
-            onClick={() => toggleActive(l)}
-            onKeyDown={(e) => onKey(e, l)}
-          >
-            <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined }}>
-              {l.src ? (
-                <img src={l.src} alt={l.name} width={20} height={20} />
-              ) : l.slug ? (
-                // fetch colored SVG from Simple Icons CDN using brand color when available
-                <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} />
-              ) : (
-                <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
-                  {l.label || l.name}
-                </span>
-              )}
+        {logos.map((l) => {
+          const h = hashCode(l.name);
+          const delay = (h % 2200) / 1000; // 0 - 2.199s
+          const dur = 3.2 + ((hashCode(l.name + 'x') % 2400) / 1000); // 3.2 - 5.599s
+          const isGitHub = l.name === 'GitHub' || l.slug === 'github';
+          const brighten = l.name === 'Next.js' || isGitHub;
+          const tileBoxShadow = isGitHub
+            ? `0 14px 40px rgba(0,0,0,0.6), 0 12px 36px ${'#' + (l.color || '181717')}44`
+            : l.color
+            ? `0 12px 36px ${'#' + l.color}22`
+            : undefined;
+          const tileBg = isGitHub ? 'rgba(255,255,255,0.06)' : brighten ? 'rgba(255,255,255,0.04)' : undefined;
+
+          return (
+            <div
+              key={l.name}
+              className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 logo-glow logo-pulse"
+              title={l.name}
+              role="button"
+              tabIndex={0}
+              aria-pressed={active?.name === l.name}
+              aria-expanded={active?.name === l.name}
+              aria-controls={active?.name === l.name ? 'tech-desc-panel' : undefined}
+              onClick={() => toggleActive(l)}
+              onKeyDown={(e) => onKey(e, l)}
+              style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
+            >
+              <div className="logo-tile" style={{ boxShadow: tileBoxShadow, background: tileBg }}>
+                {l.src ? (
+                  <img
+                    src={l.src}
+                    alt={l.name}
+                    width={20}
+                    height={20}
+                    style={isGitHub ? { filter: 'brightness(1.28) drop-shadow(0 6px 18px rgba(0,0,0,0.6))' } : brighten ? { filter: 'brightness(1.22)' } : undefined}
+                  />
+                ) : l.slug ? (
+                  // fetch colored SVG from Simple Icons CDN using brand color when available
+                  <img
+                    src={isGitHub ? SIMPLE_ICONS(l.slug, 'ffffff') : SIMPLE_ICONS(l.slug, l.color || 'ffffff')}
+                    alt={l.name}
+                    width={20}
+                    height={20}
+                    style={isGitHub ? { filter: 'brightness(1.28) drop-shadow(0 6px 18px rgba(0,0,0,0.6))' } : brighten ? { filter: 'brightness(1.22)' } : undefined}
+                  />
+                ) : (
+                  <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
+                    {l.label || l.name}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
             </div>
-            <span className="text-sm text-gray-300 hidden sm:inline">{l.name}</span>
-          </div>
-        ))}
+          );
+        })}
 
         {/* Absolutely positioned description panel to avoid pushing other content (like the profile picture) */}
         {active && (
@@ -108,9 +147,9 @@ export default function TechLogos() {
               <div className="flex items-start gap-3">
                 <div className="logo-tile shrink-0 mt-0.5">
                   {active.src ? (
-                    <img src={active.src} alt={active.name} width={20} height={20} />
+                    <img src={active.src} alt={active.name} width={20} height={20} style={active.name === 'Next.js' || active.name === 'GitHub' ? { filter: 'brightness(1.22)' } : undefined} />
                   ) : active.slug ? (
-                    <img src={SIMPLE_ICONS(active.slug, active.color || 'ffffff')} alt={active.name} width={20} height={20} />
+                    <img src={SIMPLE_ICONS(active.slug, active.color || 'ffffff')} alt={active.name} width={20} height={20} style={active.name === 'Next.js' || active.name === 'GitHub' ? { filter: 'brightness(1.22)' } : undefined} />
                   ) : (
                     <span className="text-[11px] font-semibold" style={{ background: active.bg || "#111827", color: active.fg || "#E5E7EB" }}>
                       {active.label || active.name}
