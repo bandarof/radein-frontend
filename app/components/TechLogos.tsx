@@ -39,6 +39,8 @@ const logos: Logo[] = [
   { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
+  { name: "Visual Studio", src: "https://visualstudio.microsoft.com/wp-content/uploads/2021/10/Product-Icon.svg", color: "5C2D91", desc: "Integrated development environment by Microsoft for building apps and services." },
+  { name: "ICD-10", label: "ICD-10", bg: "#0F3B68", fg: "#FFFFFF", desc: "International Classification of Diseases, 10th Revision medical coding standard." },
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
