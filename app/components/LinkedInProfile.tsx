@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Timeline from './Timeline';
 
-export default function LinkedInProfile({ profileUrl, onSummary, initialSummary, onPosts }: { profileUrl: string; onSummary?: (s: string) => void; initialSummary?: string; onPosts?: (p: any) => void; }) {
+export default function LinkedInProfile({ profileUrl }: { profileUrl: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any | null>(null);
@@ -20,28 +20,9 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
       }
       const json = await res.json();
       if (!res.ok) {
-        // don't auto-redirect; surface the status to the UI
         setError(json?.error || 'Failed to load profile');
       } else {
         setData(json);
-        // call parent callback with best-effort summary
-        const fetchedSummary = json?.profile?.summary || json?.me?.summary || json?.profile?.headline || json?.me?.localizedHeadline || null;
-        if (fetchedSummary && typeof onSummary === 'function') {
-          try { onSummary(fetchedSummary); } catch (e) {}
-        }
-
-        // try to fetch posts and notify parent
-        if (typeof onPosts === 'function') {
-          try {
-            const postsRes = await fetch('/api/linkedin/posts');
-            if (postsRes.ok) {
-              const postsJson = await postsRes.json();
-              try { onPosts(postsJson); } catch (e) {}
-            } else {
-              // if unauthorized or other, ignore here
-            }
-          } catch (e) {}
-        }
       }
     } catch (err: any) {
       setError(err?.message || 'Network error');
@@ -49,7 +30,6 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
       setLoading(false);
     }
   }
-
 
   // Extract summary and experiences from response
   function extractExperience(profileData: any) {
@@ -80,16 +60,9 @@ export default function LinkedInProfile({ profileUrl, onSummary, initialSummary,
     <div className="linkedin-profile">
       <div className="mx-auto max-w-3xl bg-gray-900/60 border border-gray-800 rounded-md p-6">
         {!data && (
-          <div className="py-6">
-            {initialSummary ? (
-              <div className="mb-4">
-                <p className="mt-2 text-gray-300 text-sm leading-relaxed">{initialSummary}</p>
-              </div>
-            ) : (
-              <p className="text-gray-300 mb-4 text-center">Load profile summary and experience from LinkedIn for {profileUrl}</p>
-            )}
-
-            <div className="flex justify-center gap-3 mt-4">
+          <div className="text-center py-8">
+            <p className="text-gray-300 mb-4">Load profile summary and experience from LinkedIn for {profileUrl}</p>
+            <div className="flex justify-center gap-3">
               <button onClick={loadProfile} disabled={loading} className="px-6 py-3 rounded-md bg-cyan-400 text-gray-900 font-semibold hover:bg-cyan-300 transition">
                 {loading ? 'Loading...' : 'Load LinkedIn profile'}
               </button>
