@@ -83,7 +83,7 @@ export default function TechLogos() {
     function handleOutside(ev: MouseEvent) {
       if (!panelRef.current || !containerRef.current) return;
       const t = ev.target as Node;
-      if (active && !panelRef.current.contains(t) && !containerRef.current.contains(t)) {
+      if (active && !panelRef.current.contains(t)) {
         setActive(null);
         setPos(null);
       }
