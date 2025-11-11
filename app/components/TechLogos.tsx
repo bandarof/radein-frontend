@@ -83,7 +83,15 @@ export default function TechLogos() {
           const h = hashCode(l.name);
           const delay = (h % 2200) / 1000; // 0 - 2.199s
           const dur = 3.2 + ((hashCode(l.name + 'x') % 2400) / 1000); // 3.2 - 5.599s
-          const brighten = l.name === 'Next.js' || l.name === 'GitHub';
+          const isGitHub = l.name === 'GitHub' || l.slug === 'github';
+          const brighten = l.name === 'Next.js' || isGitHub;
+          const tileBoxShadow = isGitHub
+            ? `0 14px 40px rgba(0,0,0,0.6), 0 12px 36px ${'#' + (l.color || '181717')}44`
+            : l.color
+            ? `0 12px 36px ${'#' + l.color}22`
+            : undefined;
+          const tileBg = isGitHub ? 'rgba(255,255,255,0.06)' : brighten ? 'rgba(255,255,255,0.04)' : undefined;
+
           return (
             <div
               key={l.name}
@@ -98,12 +106,24 @@ export default function TechLogos() {
               onKeyDown={(e) => onKey(e, l)}
               style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
             >
-              <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined, background: brighten ? 'rgba(255,255,255,0.04)' : undefined }}>
+              <div className="logo-tile" style={{ boxShadow: tileBoxShadow, background: tileBg }}>
                 {l.src ? (
-                  <img src={l.src} alt={l.name} width={20} height={20} style={brighten ? { filter: 'brightness(1.22)' } : undefined} />
+                  <img
+                    src={l.src}
+                    alt={l.name}
+                    width={20}
+                    height={20}
+                    style={isGitHub ? { filter: 'brightness(1.28) drop-shadow(0 6px 18px rgba(0,0,0,0.6))' } : brighten ? { filter: 'brightness(1.22)' } : undefined}
+                  />
                 ) : l.slug ? (
                   // fetch colored SVG from Simple Icons CDN using brand color when available
-                  <img src={SIMPLE_ICONS(l.slug, l.color || 'ffffff')} alt={l.name} width={20} height={20} style={brighten ? { filter: 'brightness(1.22)' } : undefined} />
+                  <img
+                    src={isGitHub ? SIMPLE_ICONS(l.slug, 'ffffff') : SIMPLE_ICONS(l.slug, l.color || 'ffffff')}
+                    alt={l.name}
+                    width={20}
+                    height={20}
+                    style={isGitHub ? { filter: 'brightness(1.28) drop-shadow(0 6px 18px rgba(0,0,0,0.6))' } : brighten ? { filter: 'brightness(1.22)' } : undefined}
+                  />
                 ) : (
                   <span className="text-[11px] font-semibold" style={{ background: l.bg || "#111827", color: l.fg || "#E5E7EB" }}>
                     {l.label || l.name}
