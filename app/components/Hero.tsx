@@ -175,6 +175,10 @@ export default function Hero() {
             Bander Radein
           </h1>
 
+          <div className="relative mt-5 flex flex-col">
+            Building Digital Powerhouses
+          </div>
+
           <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
 
           <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
