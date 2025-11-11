@@ -28,9 +28,14 @@ const logos: Logo[] = [
   { name: "PostgreSQL", slug: "postgresql", color: "336791", desc: "Advanced open‑source relational database with strong SQL and extensibility." },
   { name: "Supabase", slug: "supabase", color: "3ECF8E", desc: "Open source Firebase alternative: Postgres, Auth, Storage, and real‑time APIs." },
   { name: "web3.js", slug: "web3dotjs", color: "143CFB", desc: "JavaScript libraries for interacting with Ethereum and EVM-compatible blockchains." },
+  { name: "BNB Smart Chain", slug: "binance", color: "F3BA2F", desc: "EVM-compatible blockchain (BNB Smart Chain) for fast, low-cost transactions and scalable dApps." },
+  { name: "Postman", slug: "postman", color: "FF6C37", desc: "API development environment for building, testing, and documenting APIs with collaboration." },
+  { name: "Builder.io", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2F5cedf6b893bb41b5af30ce60412824ba?format=webp&width=800", color: "6200EA", desc: "Visual headless CMS and page builder for composing and delivering content-driven experiences." },
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
-  { name: "ArcGIS", slug: "arcgis", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
-  { name: "SketchUp", slug: "sketchup", desc: "3D modeling software used for architectural, interior, and product design." },
+  { name: "ArcGIS", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbe535e6a481f4abb8371761ed42d1c71?format=webp&width=800", color: "006BAD", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
+  { name: "SketchUp", slug: "sketchup", color: "E92930", desc: "3D modeling software used for architectural, interior, and product design." },
+  { name: "SAP", slug: "sap", color: "006BB8", desc: "Enterprise software for ERP, analytics, and business process management." },
+  { name: "cPanel", slug: "cpanel", color: "FF6C2C", desc: "Web hosting control panel for managing servers, domains, and email via a graphical interface." },
   { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
@@ -65,7 +70,7 @@ export default function TechLogos() {
         {logos.map((l) => (
           <div
             key={l.name}
-            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60"
+            className="flex items-center gap-3 rounded-lg transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60 logo-glow logo-pulse"
             title={l.name}
             role="button"
             tabIndex={0}
@@ -75,7 +80,7 @@ export default function TechLogos() {
             onClick={() => toggleActive(l)}
             onKeyDown={(e) => onKey(e, l)}
           >
-            <div className="logo-tile">
+            <div className="logo-tile" style={{ boxShadow: l.color ? `0 12px 36px ${'#' + l.color}22` : undefined }}>
               {l.src ? (
                 <img src={l.src} alt={l.name} width={20} height={20} />
               ) : l.slug ? (

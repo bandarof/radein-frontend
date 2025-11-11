@@ -163,27 +163,47 @@ export default function Hero() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="container mx-auto px-6 grid md:grid-cols-2 items-center gap-10"
-      >
+    variants={{
+      hidden: {},
+      show: { transition: { staggerChildren: 0.12, delayChildren: 0.12 } }
+    }}
+    initial="hidden"
+    animate="show"
+    className="container mx-auto px-6 grid md:grid-cols-2 items-center gap-10"
+  >
         <div className="max-w-2xl text-center md:text-left">
-          <p className="text-sm text-cyan-300 font-medium tracking-widest uppercase">Hi, my name is</p>
+          <motion.p className="text-sm text-cyan-300 font-medium tracking-widest uppercase" variants={{ hidden:{ opacity:0, y:6 }, show:{ opacity:1, y:0, transition:{ duration:0.5, ease:'easeOut' } } }}>Hi, my name is</motion.p>
 
-          <h1 className="mt-3 text-5xl sm:text-6xl font-extrabold leading-tight bg-gradient-to-r from-white via-cyan-200 to-indigo-200 bg-clip-text text-transparent drop-shadow-[0_6px_48px_rgba(2,6,23,0.6)]">
+          <motion.h1 className="mt-3 text-5xl sm:text-6xl font-extrabold leading-tight bg-gradient-to-r from-white via-cyan-200 to-indigo-200 bg-clip-text text-transparent drop-shadow-[0_6px_48px_rgba(2,6,23,0.6)]" variants={{ hidden:{ opacity:0, y:18 }, show:{ opacity:1, y:0, transition:{ duration:0.8, ease:'easeOut' } } }}>
             Bander Radein
-          </h1>
+          </motion.h1>
 
-          <div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden />
+          <motion.div className="relative flex flex-col font-normal" variants={{ hidden:{ opacity:0, x:-18 }, show:{ opacity:1, x:0, transition:{ duration:0.8, ease:'easeOut' } } }}>
+            <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+              <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+                <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+                  <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+                    <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+                      <blockquote style={{margin: '0 0 0 40px', border: 'none', padding: '0px'}}>
+                        Building Digital Powerhouses
+                      </blockquote>
+                    </blockquote>
+                  </blockquote>
+                </blockquote>
+              </blockquote>
+            </blockquote>
+          </motion.div>
 
-          <p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl">
+          <motion.div className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-80" aria-hidden variants={{ hidden:{ scaleX:0, opacity:0 }, show:{ scaleX:1, opacity:1, transition:{ duration:0.6, ease:'easeOut' } } }} />
+
+          <motion.p className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl" variants={{ hidden:{ opacity:0, y:10 }, show:{ opacity:1, y:0, transition:{ duration:0.7, ease:'easeOut' } } }}>
             Driving business growth through intelligent automation, secure blockchain integration, and next-gen web technology.
-          </p>
+          </motion.p>
 
-          <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
-            <a
+          <motion.div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start" variants={{ hidden:{ opacity:0 }, show:{ opacity:1, transition:{ delay:0.2 } } }}>
+            <motion.a
               href={EMBED_URL}
+              variants={{ hidden:{ opacity:0, scale:0.9, y:8 }, show:{ opacity:1, scale:1, y:0, transition:{ type:'spring', stiffness:260, damping:20 } } }}
               onClick={async (e) => {
                 e.preventDefault();
 
@@ -244,15 +264,12 @@ export default function Hero() {
               rel="noopener noreferrer nofollow"
             >
               Hire me!
-            </a>
+            </motion.a>
 
-            <a
-              href="/portfolio"
-              className="inline-flex items-center justify-center px-7 py-3 rounded-lg border border-gray-700 text-gray-200 hover:border-cyan-400/60 hover:text-white transition backdrop-blur-sm"
-            >
+            <motion.a href="/portfolio" variants={{ hidden:{ opacity:0, y:8 }, show:{ opacity:1, y:0, transition:{ duration:0.6 } } }} className="inline-flex items-center justify-center px-7 py-3 rounded-lg border border-gray-700 text-gray-200 hover:border-cyan-400/60 hover:text-white transition backdrop-blur-sm">
               View portfolio
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
           {/* tech logos */}
           <div className="mt-10">

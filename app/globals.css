@@ -157,6 +157,27 @@ body {
 .logo-tile:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 30px rgba(2,6,23,0.6); background: rgba(255,255,255,0.03); }
 .logo-tile img { width: 20px; height: 20px; display: block; }
 
+/* Subtle perpetual float/glow for tech logos */
+@keyframes logoFloat {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+.logo-glow {
+  animation: logoFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Slight pulsating overlay to simulate glow (color applied inline via box-shadow) */
+@keyframes logoPulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+.logo-pulse {
+  animation: logoPulse 3.6s ease-in-out infinite;
+}
+
 /* small refined typography helpers */
 h1 { letter-spacing: -0.02em; }
 p { color: rgba(230,238,246,0.85); }
