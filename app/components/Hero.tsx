@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+
+const HERO_SUBTEXT = 'I create scalable web apps & blockchain-ready platforms that drive business growth.';
 import { motion } from 'framer-motion';
 import TechLogos from './TechLogos';
 
