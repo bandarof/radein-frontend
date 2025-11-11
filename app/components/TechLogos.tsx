@@ -36,15 +36,15 @@ const logos: Logo[] = [
   { name: "SketchUp", slug: "sketchup", color: "E92930", desc: "3D modeling software used for architectural, interior, and product design." },
   { name: "SAP", slug: "sap", color: "006BB8", desc: "Enterprise software for ERP, analytics, and business process management." },
   { name: "cPanel", slug: "cpanel", color: "FF6C2C", desc: "Web hosting control panel for managing servers, domains, and email via a graphical interface." },
-  { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
+  { name: "Avaya", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fe2a2ce935ed649d290cbc9e1af451d3d?format=webp&width=800", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
   { name: "Visual Studio", src: "https://visualstudio.microsoft.com/wp-content/uploads/2021/10/Product-Icon.svg", color: "5C2D91", desc: "Integrated development environment by Microsoft for building apps and services." },
-  { name: "ICD-10", label: "ICD-10", bg: "#0F3B68", fg: "#FFFFFF", desc: "International Classification of Diseases, 10th Revision medical coding standard." },
+  { name: "ICD-10", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbfb69800f8ab4019a6fa20d99c43c1fd?format=webp&width=800", desc: "International Classification of Diseases, 10th Revision medical coding standard." },
   { name: "GitHub", slug: "github", color: "181717", desc: "Code hosting platform for collaboration, CI/CD, issues, and code review." },
   { name: "Git", slug: "git", color: "F05032", desc: "Distributed version control system for branching, merging, and history." },
   { name: "Vercel", slug: "vercel", color: "000000", desc: "Cloud platform for deploying frontends and serverless functions—ideal for Next.js." },
-  { name: "Linux", slug: "linux", color: "FBBF24", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
+  { name: "Linux", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2F0317244a793643bfa681c568a5208840?format=webp&width=800", desc: "Open-source family of Unix-like operating systems, widely used on servers, embedded systems, and desktops." },
 ];
 
 const SIMPLE_ICONS = (slug: string, color = "ffffff") => `https://cdn.simpleicons.org/${slug}/${color}`;
