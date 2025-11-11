@@ -89,12 +89,12 @@ export default function AboutParticles() {
         ctx.globalAlpha = Math.min(1, alpha);
         // draw soft circle
         const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 3);
-        g.addColorStop(0, p.color.replace(/rgba\(([^)]+)\)/, (m, g1) => {
+        g.addColorStop(0, p.color.replace(/rgba\(([^)]+)\)/, (m: string, g1: string) => {
           // ensure filled color has slightly stronger alpha
           const parts = g1.split(',').map(s => s.trim());
           return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${Math.min(1, alpha)})`;
         }));
-        g.addColorStop(0.3, p.color.replace(/rgba\(([^)]+)\)/, (m, g1) => {
+        g.addColorStop(0.3, p.color.replace(/rgba\(([^)]+)\)/, (m: string, g1: string) => {
           const parts = g1.split(',').map(s => s.trim());
           return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${Math.min(0.45, alpha * 0.6)})`;
         }));
