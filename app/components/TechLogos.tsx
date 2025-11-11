@@ -34,6 +34,7 @@ const logos: Logo[] = [
   { name: "Remix", slug: "remix", color: "B4282E", desc: "Full‑stack web framework focusing on web standards, forms, and nested routing." },
   { name: "ArcGIS", src: "https://cdn.builder.io/api/v1/image/assets%2F16fe0aa9fbed403f8fb856fe14742033%2Fbe535e6a481f4abb8371761ed42d1c71?format=webp&width=800", color: "006BAD", desc: "Platform for mapping and spatial analytics; build, manage, and analyze geospatial data." },
   { name: "SketchUp", slug: "sketchup", color: "E92930", desc: "3D modeling software used for architectural, interior, and product design." },
+  { name: "SAP", slug: "sap", color: "006BB8", desc: "Enterprise software for ERP, analytics, and business process management." },
   { name: "Avaya", label: "Avaya", bg: "#CC0000", fg: "#FFFFFF", desc: "Provider of business communications and collaboration solutions, including VoIP and unified communications." },
   { name: "Solidity", slug: "solidity", color: "363636", desc: "Contract‑oriented language for writing smart contracts on Ethereum." },
   { name: "Python", slug: "python", color: "3776AB", desc: "Versatile programming language for scripting, data, and backend services." },
